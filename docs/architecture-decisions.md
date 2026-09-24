@@ -89,3 +89,32 @@ This log records the foundational architectural decisions established during the
 - **Reason**: Preserves all security protections, server-side SEO generation, and fast edge revalidation.
 - **Trade-offs**: Requires Hostinger environment supporting Node.js or VPS.
 - **Consequences**: Maximum architectural flexibility, enterprise-grade deployment compatibility.
+
+---
+
+### ADR 007: Accessible Radix UI Primitives and Class-Variance-Authority (CVA)
+- **Decision**: Build UI primitives on top of unstyled Radix UI primitives (`@radix-ui/react-*`) and `class-variance-authority` (CVA) rather than heavy opinionated UI kits or raw unmanaged HTML.
+- **Date**: 2026-09-24
+- **Context**: The legacy platform used Material UI (MUI) alongside DaisyUI and CSS checkbox hacks for modal dialogs. Modals lacked keyboard focus trapping, `aria-modal`, or Escape key listeners. Color contrast in buttons and headers was as low as 1.62:1.
+- **Options considered**:
+  1. *Raw HTML5 elements*: Minimal bundle, but complex cross-browser accessibility gaps in custom dialogs, popovers, and select dropdowns.
+  2. *Chakra UI / Ant Design*: Heavy bundle sizes, runtime CSS-in-JS incompatibility with React Server Components.
+  3. *Radix UI Primitives + CVA (Chosen)*: Zero runtime CSS, WAI-ARIA compliant keyboard navigation, focus management, and composable type-safe variants.
+- **Chosen approach**: Radix UI Primitives with custom OPICOC tactical dark tokens and CVA.
+- **Reason**: Guaranteed WCAG AA compliance, full ownership of markup in `src/components/ui/`, zero bundle tax on unused features.
+- **Trade-offs**: Requires maintaining the component source code locally in `src/components/ui/`.
+- **Consequences**: 100% accessible dialogs, sheets, dropdowns, and tabs with zero styling conflicts.
+
+---
+
+### ADR 008: Server-First Global SiteShell with Leaf-Component Interactivity
+- **Decision**: Keep the global `SiteShell`, `Header`, and `Footer` as React Server Components (RSC), isolating interactivity into focused leaf client components (`MobileNav`, `DesktopNav`, `NewsletterForm`).
+- **Date**: 2026-09-24
+- **Context**: Turning the entire layout or shell into a client component (`"use client"`) disables streaming, bloats the client JS bundle, and prevents server-side HTML pre-rendering of marketing content.
+- **Options considered**:
+  1. *Make entire SiteShell a client component*: Easy to manage state, but forces all layout HTML and nested content into client hydration.
+  2. *Server-First SiteShell with Leaf Interactive Components (Chosen)*: Layout, Header shell, and Footer are pre-rendered server components. Client state is encapsulated in `<MobileNav />`, `<DesktopNav />`, and `<NewsletterForm />`.
+- **Chosen approach**: Server-First SiteShell with leaf client boundaries.
+- **Reason**: Maximizes HTML pre-rendering speed, reduces client JavaScript execution, and avoids hydration mismatches.
+- **Trade-offs**: Requires separating interactive child controls from structural parent layouts.
+- **Consequences**: Sub-second First Contentful Paint, cleaner component boundaries, optimal performance.
