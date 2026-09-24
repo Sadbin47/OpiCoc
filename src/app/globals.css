@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Clash";
+  src: url("/fonts/Clash_Regular.otf") format("opentype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #0B0D11;
+  --foreground: #F1F5F9;
+  --card: #12151B;
+  --card-elevated: #1A1E26;
+  --border: #262B35;
+  --border-subtle: #1E232B;
+  --foreground-muted: #94A3B8;
+  --foreground-subtle: #64748B;
+
+  --primary: #F59E0B;
+  --primary-hover: #D97706;
+  --primary-foreground: #090A0D;
+
+  --accent: #3B82F6;
+  --accent-muted: rgba(59, 130, 246, 0.12);
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --destructive: #EF4444;
+  --info: #0EA5E9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-elevated: var(--card-elevated);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-destructive: var(--destructive);
+  --color-info: var(--info);
+
+  --font-clash: "Clash", sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
