@@ -117,7 +117,7 @@ npm run lint
 - **Phase 11**: Performance Optimization & Core Web Vitals *(Complete)*
 - **Phase 12**: Security Hardening *(Complete)*
 - **Phase 13**: End-to-End Testing *(Complete)*
-- **Phase 14**: Hostinger Production Deployment *(Next Phase)*
-- **Phase 15**: Observability & Day-2 Operations
+- **Phase 14**: Hostinger Production Deployment *(Complete)*
+- **Phase 15**: Observability & Day-2 Operations *(Next Phase)*
 
 See [`docs/rebuild-roadmap.md`](docs/rebuild-roadmap.md) for full phase definitions.

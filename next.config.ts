@@ -6,7 +6,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-  // Production Performance Optimizations
+  // Production Deployment & Performance Optimizations
+  output: "standalone",
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
