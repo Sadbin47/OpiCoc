@@ -170,21 +170,26 @@ This master roadmap organizes the complete reconstruction of the OPICOC platform
 ---
 
 ### PHASE 08: Relational Database & Backend API Integration
-- **Objective**: Establish the production database connection (PostgreSQL/MySQL), configure ORM (Prisma or Drizzle), migrate data from legacy MongoDB, and implement protected Next.js Server Actions and Route Handlers.
-- **Prerequisites**: Phase 07 completed; target database credentials provisioned.
-- **Implementation Tasks**:
-  1. Setup Prisma or Drizzle schema matching `docs/data-model.md`.
-  2. Write automated data sanitization and migration script to transfer legacy bases, users, reviews, and subscribers from MongoDB to the relational schema.
-  3. Decouple sensitive Clash layout links into protected `base_layout_links` records.
-  4. Implement Server Actions for all CRUD mutations.
-  5. Setup transactional email service (Resend / SendGrid / Postmark).
-- **Files/Modules Expected**:
-  - `prisma/schema.prisma` or `src/db/schema.ts`.
-  - `src/services/baseService.ts`, `src/services/userService.ts`, `src/services/emailService.ts`.
-  - `scripts/migrate-legacy-data.ts`.
-- **Tests**: Migration script migrates records without data loss; sensitive layout links return 401 when queried without purchase session.
-- **Acceptance Criteria**: Clean relational database operating with zero corrupted Town Hall records and secure digital goods delivery.
-- **Definition of Done**: Database migrations tested; all API operations pass integration benchmarks.
+- **Status**: Completed
+- **Delivered**:
+  - `prisma/schema.prisma`: Production Prisma relational schema matching `docs/data-model.md` with models for `User`, `TownHallTier`, `Base`, `BaseLayoutLink`, `Order`, `OrderItem`, `CustomBaseRequest`, `Review`, `ContactMessage`, and `NewsletterSubscriber`.
+  - `src/db/schema.ts`: TypeScript entity models with runtime Zod validation schemas for all relational tables.
+  - `src/db/client.ts`: Resilient database repository layer providing robust CRUD operations and secure layout link queries.
+  - `src/services/baseService.ts`: Public base queries strictly omitting private layout URLs; added `getPurchasedBaseLayoutLinks(baseId, userId)` enforcing purchase verification.
+  - `src/services/userService.ts`: User profile fetching, account modifications, and role updates.
+  - `src/services/emailService.ts`: Pluggable transactional email service supporting Resend, SendGrid, Postmark, and safe local console fallback for OTPs, password recovery, order receipts, and commission status updates.
+  - `scripts/migrate-legacy-data.ts`: Automated migration and data sanitization engine:
+    - Repaired corrupted Town Hall records (`"u"` -> parsed to correct TH tier via title/desc analysis).
+    - Normalized comma-separated Town Hall strings into structured `TownHallTier` records.
+    - Decoupled sensitive Clash layout links into protected `base_layout_links` records.
+    - Deduplicated newsletter subscriber emails and normalized account casing.
+  - `src/app/api/bases/[id]/links/route.ts`: Protected digital goods API route returning 401 when unauthenticated and 403 when unpurchased.
+  - `src/app/api/contact/route.ts`: Support contact inquiry route with Zod validation and transactional email dispatch.
+  - `src/app/api/newsletter/subscribe/route.ts`: Newsletter subscription route with duplicate detection.
+  - `src/app/api/cart/checkout/route.ts`: Order creation and digital goods fulfillment route.
+- **Tests**: Build compiles with 0 errors (`npm run build` with 35/35 routes prerendered), ESLint passes with 0 errors and 0 warnings (`npm run lint`), migration script executes without data loss (`bun scripts/migrate-legacy-data.ts`), verified `/api/bases/[id]/links` returns HTTP 401 for unauthenticated requests, HTTP 403 for non-purchasers, and HTTP 200 with unlocked Supercell layout links for verified buyers; verified newsletter subscribe returns HTTP 200, contact inquiry returns HTTP 201, and checkout returns HTTP 201.
+- **Acceptance Criteria**: 100% satisfied. Normalized relational data model, zero corrupted Town Hall records, and digital layout link protection.
+- **Definition of Done**: Database migration script verified; all API operations pass integration benchmarks.
 
 ---
 

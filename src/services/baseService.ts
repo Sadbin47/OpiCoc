@@ -1,4 +1,5 @@
-import { BaseProduct, TownHallLevel } from "@/types";
+import { BaseProduct, BaseLayoutLink, TownHallLevel } from "@/types";
+import { db } from "@/db/client";
 
 const API_BASE_URL =
   process.env.LEGACY_API_URL || "https://backend-omega-one-37.vercel.app/api";
@@ -228,3 +229,21 @@ export async function getBasesByTownHall(level: number): Promise<BaseProduct[]> 
   const all = await getAllBases();
   return all.filter((b) => b.townHallLevel === level);
 }
+
+/**
+ * Fetches protected layout links for a base, strictly requiring verified purchase authorization
+ */
+export async function getPurchasedBaseLayoutLinks(
+  baseId: string,
+  userId: string
+): Promise<BaseLayoutLink[] | null> {
+  const links = await db.getPurchasedLayoutLinks(baseId, userId);
+  if (!links) return null;
+
+  return links.map((l) => ({
+    id: l.id,
+    label: l.label,
+    url: l.supercellUrl,
+  }));
+}
+

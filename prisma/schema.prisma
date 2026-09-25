@@ -1,0 +1,224 @@
+// OPICOC V2 Prisma Schema
+// Target Relational Architecture (PostgreSQL / Relational Database)
+// Derived from docs/data-model.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  BUILDER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum RequestPriority {
+  STANDARD
+  EXPRESS
+}
+
+enum RequestStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
+enum SubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+}
+
+model User {
+  id           String      @id @default(uuid())
+  firstName    String      @map("first_name") @db.VarChar(100)
+  lastName     String      @map("last_name") @db.VarChar(100)
+  email        String      @unique @db.VarChar(255)
+  passwordHash String?     @map("password_hash") @db.VarChar(255)
+  role         Role        @default(USER)
+  isVerified   Boolean     @default(false) @map("is_verified")
+  avatarUrl    String?     @map("avatar_url")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+
+  // Relationships
+  orders              Order[]
+  customBaseRequests  CustomBaseRequest[]
+  reviews             Review[]
+  createdBases        Base[]              @relation("BaseCreatedBy")
+
+  @@map("users")
+}
+
+model TownHallTier {
+  id           String   @id @db.VarChar(10) // e.g., "th18", "th17"
+  level        Int      @unique             // 15, 16, 17, 18, 19
+  name         String   @db.VarChar(50)     // e.g., "Town Hall 18"
+  badgeIconUrl String?  @map("badge_icon_url")
+  isActive     Boolean  @default(true)      @map("is_active")
+  displayOrder Int      @default(0)         @map("display_order")
+
+  // Relationships
+  bases        Base[]
+
+  @@map("town_hall_tiers")
+}
+
+model Base {
+  id              String         @id @default(uuid())
+  slug            String         @unique @db.VarChar(255)
+  title           String         @db.VarChar(255)
+  priceCents      Int            @map("price_cents") // $46.00 = 4600
+  badge           String?        @db.VarChar(50)     // e.g., "1x3", "1x5"
+  description     String         @db.Text
+  townHallId      String         @map("town_hall_id") @db.VarChar(10)
+  coverImageUrl   String         @map("cover_image_url")
+  maxSell         Int            @default(100)       @map("max_sell")
+  salesCount      Int            @default(0)         @map("sales_count")
+  seasonStartDate DateTime?      @map("season_start_date")
+  seasonEndDate   DateTime?      @map("season_end_date")
+  isActive        Boolean        @default(true)      @map("is_active")
+  createdByUserId String?        @map("created_by_user_id")
+  createdAt       DateTime       @default(now())     @map("created_at")
+  updatedAt       DateTime       @updatedAt          @map("updated_at")
+
+  // Relationships
+  townHall        TownHallTier   @relation(fields: [townHallId], references: [id])
+  createdBy       User?          @relation("BaseCreatedBy", fields: [createdByUserId], references: [id])
+  layoutLinks     BaseLayoutLink[]
+  orderItems      OrderItem[]
+  reviews         Review[]
+
+  @@index([townHallId])
+  @@index([slug])
+  @@map("bases")
+}
+
+model BaseLayoutLink {
+  id           String   @id @default(uuid())
+  baseId       String   @map("base_id")
+  label        String   @db.VarChar(100)
+  supercellUrl String   @map("supercell_url") @db.Text
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  base         Base     @relation(fields: [baseId], references: [id], onDelete: Cascade)
+
+  @@index([baseId])
+  @@map("base_layout_links")
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  orderNumber     String      @unique @map("order_number") @db.VarChar(50)
+  userId          String      @map("user_id")
+  status          OrderStatus @default(PENDING)
+  totalCents      Int         @map("total_cents")
+  currency        String      @default("USD") @db.VarChar(3)
+  paymentProvider String      @map("payment_provider") @db.VarChar(50)
+  paymentId       String?     @map("payment_id") @db.VarChar(255)
+  createdAt       DateTime    @default(now()) @map("created_at")
+
+  // Relationships
+  user            User        @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+
+  @@index([userId])
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String   @id @default(uuid())
+  orderId    String   @map("order_id")
+  baseId     String   @map("base_id")
+  priceCents Int      @map("price_cents")
+
+  // Relationships
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  base       Base     @relation(fields: [baseId], references: [id])
+
+  @@index([orderId])
+  @@index([baseId])
+  @@map("order_items")
+}
+
+model CustomBaseRequest {
+  id                String          @id @default(uuid())
+  userId            String          @map("user_id")
+  townHallLevel     Int             @map("town_hall_level")
+  defenseFocus      String?         @map("defense_focus") @db.VarChar(100)
+  requirements      String          @db.Text
+  referenceImageUrl String?         @map("reference_image_url")
+  priority          RequestPriority @default(STANDARD)
+  status            RequestStatus   @default(PENDING)
+  builderNotes      String?         @map("builder_notes") @db.Text
+  completedLayoutUrl String?        @map("completed_layout_url")
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+
+  // Relationships
+  user              User            @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("custom_base_requests")
+}
+
+model Review {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  baseId           String?  @map("base_id")
+  rating           Int      // 1 to 5
+  reviewText       String   @map("review_text") @db.Text
+  reviewImageUrl   String?  @map("review_image_url")
+  isVerifiedBuyer  Boolean  @default(false) @map("is_verified_buyer")
+  isApproved       Boolean  @default(false) @map("is_approved")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  // Relationships
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  base             Base?    @relation(fields: [baseId], references: [id])
+
+  @@index([userId])
+  @@index([baseId])
+  @@map("reviews")
+}
+
+model ContactMessage {
+  id         String    @id @default(uuid())
+  name       String    @db.VarChar(100)
+  email      String    @db.VarChar(255)
+  subject    String    @db.VarChar(255)
+  message    String    @db.Text
+  isRead     Boolean   @default(false) @map("is_read")
+  replyText  String?   @map("reply_text") @db.Text
+  repliedAt  DateTime? @map("replied_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@index([email])
+  @@map("contact_messages")
+}
+
+model NewsletterSubscriber {
+  id               String           @id @default(uuid())
+  email            String           @unique @db.VarChar(255)
+  status           SubscriberStatus @default(ACTIVE)
+  unsubscribeToken String           @unique @default(uuid()) @map("unsubscribe_token")
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
+
+  @@map("newsletter_subscribers")
+}
