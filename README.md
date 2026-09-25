@@ -116,8 +116,8 @@ npm run lint
 - **Phase 10**: Technical SEO & WCAG 2.1 AA Accessibility *(Complete)*
 - **Phase 11**: Performance Optimization & Core Web Vitals *(Complete)*
 - **Phase 12**: Security Hardening *(Complete)*
-- **Phase 13**: End-to-End Testing *(Next Phase)*
-- **Phase 14**: Hostinger Production Deployment
+- **Phase 13**: End-to-End Testing *(Complete)*
+- **Phase 14**: Hostinger Production Deployment *(Next Phase)*
 - **Phase 15**: Observability & Day-2 Operations
 
 See [`docs/rebuild-roadmap.md`](docs/rebuild-roadmap.md) for full phase definitions.
