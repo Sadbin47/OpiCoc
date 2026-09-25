@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginSchema } from "@/features/auth/schemas/authSchemas";
-import { loginUser } from "@/services/authService";
+import { loginUser, DEMO_ACCOUNTS } from "@/services/authService";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -72,6 +72,35 @@ function LoginForm() {
           <span>{error}</span>
         </div>
       )}
+
+      {/* Demo Credentials Quick Fill */}
+      <div className="flex items-center justify-between p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1]">
+        <span className="font-semibold text-amber-400">Demo Fill:</span>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail(DEMO_ACCOUNTS.admin.email);
+              setPassword(DEMO_ACCOUNTS.admin.password);
+              setError(null);
+            }}
+            className="px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[11px] font-medium transition-colors border border-amber-500/30"
+          >
+            Admin (Chief)
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail(DEMO_ACCOUNTS.user.email);
+              setPassword(DEMO_ACCOUNTS.user.password);
+              setError(null);
+            }}
+            className="px-2.5 py-1 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-[11px] font-medium transition-colors border border-slate-700"
+          >
+            User (Member)
+          </button>
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Email Field */}
