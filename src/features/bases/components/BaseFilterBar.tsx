@@ -5,6 +5,9 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X, ArrowUpDown, Filter } from "lucide-react";
+import { motion } from "motion/react";
+import { useAnimationPreference } from "@/hooks/useAnimationPreference";
+import { cn } from "@/lib/utils";
 
 const TOWN_HALL_OPTIONS = [
   { label: "All Tiers", value: "" },
@@ -28,6 +31,7 @@ export function BaseFilterBar() {
   const currentTh = searchParams.get("th") || "";
   const currentSort = searchParams.get("sort") || "newest";
   const currentSearch = searchParams.get("search") || "";
+  const { prefersReduced } = useAnimationPreference();
 
   const [searchTerm, setSearchTerm] = React.useState(currentSearch);
   const [prevCurrentSearch, setPrevCurrentSearch] = React.useState(currentSearch);
@@ -118,18 +122,31 @@ export function BaseFilterBar() {
           {TOWN_HALL_OPTIONS.map((th) => {
             const isSelected = currentTh === th.value;
             return (
-              <button
+              <motion.button
                 key={th.value}
                 type="button"
                 onClick={() => updateFilters({ th: th.value || null })}
-                className={`px-3 py-1 rounded-md text-xs font-mono font-semibold transition-all ${
+                whileTap={prefersReduced ? undefined : { scale: 0.96 }}
+                className={cn(
+                  "relative px-3.5 py-1 rounded-md text-xs font-mono font-semibold transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500",
                   isSelected
-                    ? "bg-amber-500 text-black shadow-sm"
-                    : "bg-[#1A1E26] text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#262B35] border border-[#262B35]"
-                }`}
+                    ? "text-black"
+                    : "text-[#94A3B8] hover:text-[#F1F5F9] bg-[#1A1E26] hover:bg-[#262B35] border border-[#262B35]"
+                )}
               >
-                {th.label}
-              </button>
+                {isSelected && (
+                  <motion.span
+                    layoutId={prefersReduced ? undefined : "activeCatalogueTownHallTab"}
+                    className="absolute inset-0 rounded-md bg-amber-500 shadow-sm"
+                    transition={{
+                      type: "spring",
+                      stiffness: 450,
+                      damping: 32,
+                    }}
+                  />
+                )}
+                <span className="relative z-10">{th.label}</span>
+              </motion.button>
             );
           })}
         </div>

@@ -1,10 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/features/home/components/AddToCartButton";
 import { BaseProduct } from "@/types";
 import { ShieldCheck, Clock, Eye } from "lucide-react";
+import { useAnimationPreference, useSafeVariants } from "@/hooks/useAnimationPreference";
+import { staggerItemVariants } from "@/components/motion/variants";
 
 interface BaseCardProps {
   base: BaseProduct;
@@ -12,8 +17,16 @@ interface BaseCardProps {
 }
 
 export function BaseCard({ base, priority = false }: BaseCardProps) {
+  const { prefersReduced } = useAnimationPreference();
+  const safeVariants = useSafeVariants(staggerItemVariants);
+
   return (
-    <div className="group flex flex-col justify-between rounded-xl border border-[#262B35] bg-[#12151B] overflow-hidden transition-all duration-300 hover:border-amber-500/40 hover:shadow-xl hover:shadow-black/50">
+    <motion.article
+      variants={safeVariants}
+      whileHover={prefersReduced ? undefined : { y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+      whileTap={prefersReduced ? undefined : { scale: 0.99, transition: { duration: 0.08 } }}
+      className="group flex flex-col justify-between rounded-xl border border-[#262B35] bg-[#12151B] overflow-hidden transition-colors duration-300 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/5 focus-within:ring-2 focus-within:ring-amber-500/50"
+    >
       {/* Product Image Area */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#1A1E26]">
         <Image
@@ -88,6 +101,6 @@ export function BaseCard({ base, priority = false }: BaseCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.article>
   );
 }

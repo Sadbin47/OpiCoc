@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/select";
 import { MotionFadeIn } from "@/components/motion/MotionFadeIn";
 import { MotionStaggerContainer, MotionStaggerItem } from "@/components/motion/MotionStagger";
+import { TacticalButton } from "@/components/motion/TacticalButton";
 import {
   Shield,
   Sparkles,
@@ -617,6 +618,27 @@ export default function DesignSystemPage() {
                   </MotionStaggerItem>
                 ))}
               </MotionStaggerContainer>
+
+              {/* Tactical Spring Button Demonstrations */}
+              <div className="pt-4 border-t border-[#1E232B] space-y-3">
+                <span className="text-xs font-mono text-[#64748B]">
+                  Tactile Spring Buttons (Motion Physics: stiffness 450, damping 25):
+                </span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <TacticalButton variant="primary" size="md">
+                    Tactile Primary
+                  </TacticalButton>
+                  <TacticalButton variant="secondary" size="md">
+                    Tactile Secondary
+                  </TacticalButton>
+                  <TacticalButton variant="outline" size="md">
+                    Tactile Outline
+                  </TacticalButton>
+                  <TacticalButton variant="ghost" size="md">
+                    Tactile Ghost
+                  </TacticalButton>
+                </div>
+              </div>
             </div>
           </div>
         </Container>

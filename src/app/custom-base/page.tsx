@@ -18,6 +18,9 @@ import {
   ArrowRight,
   MessageCircle,
 } from "lucide-react";
+import { motion } from "motion/react";
+import { useAnimationPreference } from "@/hooks/useAnimationPreference";
+import { PageTransition } from "@/components/motion/PageTransition";
 
 const DEFENSE_FOCUS_OPTIONS = [
   "Anti-Root Rider & Ground Smash",
@@ -30,6 +33,7 @@ const DEFENSE_FOCUS_OPTIONS = [
 
 export default function CustomBasePage() {
   const router = useRouter();
+  const { prefersReduced } = useAnimationPreference();
 
   const [townHall, setTownHall] = React.useState("Town Hall 18");
   const [defenseFocus, setDefenseFocus] = React.useState(DEFENSE_FOCUS_OPTIONS[0]);
@@ -89,7 +93,7 @@ export default function CustomBasePage() {
   };
 
   return (
-    <div className="py-12 sm:py-20 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-20 bg-[#0B0D11]">
       <Container size="default">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs font-mono text-[#64748B] mb-8">
@@ -132,20 +136,35 @@ export default function CustomBasePage() {
               <div className="space-y-2">
                 <Label className="text-xs text-[#CBD5E1]">Town Hall Level</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {["Town Hall 18", "Town Hall 17", "Town Hall 16", "Town Hall 15"].map((th) => (
-                    <button
-                      key={th}
-                      type="button"
-                      onClick={() => setTownHall(th)}
-                      className={`p-3 rounded-lg text-xs font-mono font-semibold border transition-all text-center ${
-                        townHall === th
-                          ? "bg-amber-500 text-black border-amber-500 shadow-sm"
-                          : "bg-[#1A1E26] text-[#94A3B8] border-[#262B35] hover:text-[#F1F5F9] hover:bg-[#262B35]"
-                      }`}
-                    >
-                      {th}
-                    </button>
-                  ))}
+                  {["Town Hall 18", "Town Hall 17", "Town Hall 16", "Town Hall 15"].map((th) => {
+                    const isSelected = townHall === th;
+                    return (
+                      <motion.button
+                        key={th}
+                        type="button"
+                        onClick={() => setTownHall(th)}
+                        whileTap={prefersReduced ? undefined : { scale: 0.97 }}
+                        className={`relative p-3 rounded-lg text-xs font-mono font-semibold transition-all text-center select-none ${
+                          isSelected
+                            ? "text-black"
+                            : "bg-[#1A1E26] text-[#94A3B8] border border-[#262B35] hover:text-[#F1F5F9] hover:bg-[#262B35]"
+                        }`}
+                      >
+                        {isSelected && (
+                          <motion.span
+                            layoutId={prefersReduced ? undefined : "activeCustomBaseThTab"}
+                            className="absolute inset-0 rounded-lg bg-amber-500 shadow-sm"
+                            transition={{
+                              type: "spring",
+                              stiffness: 450,
+                              damping: 32,
+                            }}
+                          />
+                        )}
+                        <span className="relative z-10">{th}</span>
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -313,6 +332,6 @@ export default function CustomBasePage() {
           </div>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }

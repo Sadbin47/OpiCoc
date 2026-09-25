@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/features/home/components/AddToCartButton";
 import { BaseCard } from "@/features/bases/components/BaseCard";
+import { MotionContainer } from "@/components/motion/MotionContainer";
+import { PageTransition } from "@/components/motion/PageTransition";
 import {
   ShieldCheck,
   Clock,
@@ -64,7 +66,7 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
   const related = relatedAll.filter((b) => b.id !== base.id).slice(0, 3);
 
   return (
-    <div className="py-12 sm:py-16 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-16 bg-[#0B0D11]">
       <Container size="default">
         {/* Breadcrumb Navigation */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[#64748B] mb-8">
@@ -262,14 +264,14 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <MotionContainer animation="stagger" className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {related.map((rel) => (
                 <BaseCard key={rel.id} base={rel} />
               ))}
-            </div>
+            </MotionContainer>
           </div>
         )}
       </Container>
-    </div>
+    </PageTransition>
   );
 }

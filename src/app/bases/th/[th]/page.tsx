@@ -7,6 +7,8 @@ import { Container } from "@/components/layout/Container";
 import { BaseCard } from "@/features/bases/components/BaseCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { MotionContainer } from "@/components/motion/MotionContainer";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { Shield, Sparkles, ArrowLeft, ArrowRight } from "lucide-react";
 
 interface TownHallPageProps {
@@ -97,7 +99,7 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
   const bases = await getBasesByTownHall(level);
 
   return (
-    <div className="py-12 sm:py-16 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-16 bg-[#0B0D11]">
       <Container size="default">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs font-mono text-[#64748B] mb-8">
@@ -190,13 +192,16 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
           </Button>
         </div>
 
-        {/* Bases Grid */}
+        {/* Bases Grid with Staggered Motion */}
         {bases.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <MotionContainer
+            animation="stagger"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {bases.map((base, idx) => (
               <BaseCard key={base.id} base={base} priority={idx < 4} />
             ))}
-          </div>
+          </MotionContainer>
         ) : (
           <div className="p-12 text-center rounded-xl border border-[#262B35] bg-[#12151B] space-y-4">
             <Shield className="w-10 h-10 text-amber-500/50 mx-auto" />
@@ -239,6 +244,6 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
           </Button>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }

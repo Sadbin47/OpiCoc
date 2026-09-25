@@ -6,6 +6,8 @@ import { Container } from "@/components/layout/Container";
 import { BaseCard } from "@/features/bases/components/BaseCard";
 import { BaseFilterBar } from "@/features/bases/components/BaseFilterBar";
 import { Button } from "@/components/ui/button";
+import { MotionContainer } from "@/components/motion/MotionContainer";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { Shield, Sparkles, AlertCircle } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -64,7 +66,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
   const paginatedBases = filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
-    <div className="py-12 sm:py-16 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-16 bg-[#0B0D11]">
       <Container size="default">
         {/* Page Header */}
         <div className="max-w-3xl mb-8 space-y-3">
@@ -98,13 +100,16 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
           </span>
         </div>
 
-        {/* Base Products Grid */}
+        {/* Base Products Grid with Staggered Motion */}
         {paginatedBases.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <MotionContainer
+            animation="stagger"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {paginatedBases.map((base, idx) => (
               <BaseCard key={base.id} base={base} priority={idx < 4} />
             ))}
-          </div>
+          </MotionContainer>
         ) : (
           <div className="p-12 text-center rounded-xl border border-[#262B35] bg-[#12151B] space-y-4 my-8">
             <div className="w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto">
@@ -165,6 +170,6 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
           </Button>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }
