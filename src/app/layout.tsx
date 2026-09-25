@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { SiteShell } from "@/components/layout/SiteShell";
+import { CartProvider } from "@/features/cart/context/CartContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -71,7 +72,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen`}>
-        <SiteShell>{children}</SiteShell>
+        <CartProvider>
+          <SiteShell>{children}</SiteShell>
+        </CartProvider>
       </body>
     </html>
   );

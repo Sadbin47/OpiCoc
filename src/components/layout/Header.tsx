@@ -4,7 +4,7 @@ import Image from "next/image";
 import { DesktopNav } from "@/components/layout/DesktopNav";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { UserNavButton } from "@/components/layout/UserNavButton";
-import { ShoppingCart } from "lucide-react";
+import { HeaderCartButton } from "@/components/layout/HeaderCartButton";
 
 export function Header() {
   return (
@@ -37,16 +37,7 @@ export function Header() {
         {/* Right: Actions (Cart & Auth) */}
         <div className="flex items-center gap-2.5">
           {/* Shopping Cart Button */}
-          <Link
-            href="/cart"
-            className="relative flex items-center justify-center h-9 w-9 rounded-md border border-[#262B35] bg-[#12151B] text-[#CBD5E1] hover:text-[#F1F5F9] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-            aria-label="Shopping Cart (0 items)"
-          >
-            <ShoppingCart className="w-4 h-4" />
-            <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-black shadow-sm">
-              0
-            </span>
-          </Link>
+          <HeaderCartButton />
 
           {/* User Sign In / Profile Button */}
           <UserNavButton />

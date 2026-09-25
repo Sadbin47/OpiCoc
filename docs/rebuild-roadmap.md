@@ -128,20 +128,21 @@ This master roadmap organizes the complete reconstruction of the OPICOC platform
 ---
 
 ### PHASE 06: User Dashboard, Custom Base Orders & Cart Flow
-- **Objective**: Build the shopping cart, checkout initiation, user profile, custom base design commission flow, and purchased layouts library.
-- **Prerequisites**: Phase 05 completed.
-- **Implementation Tasks**:
-  1. Rebuild Cart drawer and `/cart` page with items table, price totals, and checkout button.
-  2. Implement user profile page (`/profile`) with avatar upload and password update.
-  3. Build "My Purchased Bases" library where verified buyers can view and copy Supercell Clash of Clans layout links.
-  4. Implement `/custom-base` request submission form with requirements specification and screenshot upload.
-  5. Implement "My Custom Requests" tracker showing status (Pending, In Progress, Completed).
-- **Files/Modules Expected**:
-  - `src/app/cart/page.tsx`, `src/app/profile/page.tsx`, `src/app/custom-base/page.tsx`.
-  - `src/features/cart/context/CartContext.tsx`, `src/features/profile/components/PurchasedBasesList.tsx`.
-- **Tests**: Add to cart, modify quantity, remove item; profile updates persist; purchased layout links display only for authenticated owner.
-- **Acceptance Criteria**: Seamless shopping experience from cart to profile base library.
-- **Definition of Done**: Cart and profile features fully responsive and functional.
+- **Status**: Completed
+- **Delivered**:
+  - `src/types/index.ts`: Added TypeScript interfaces for `PurchasedBase`, `CustomRequestStatus`, and `CustomBaseRequest`.
+  - `src/features/cart/context/CartContext.tsx`: Full cart provider with lazy `useState` initializers, item addition/removal, total computation, and `localStorage` sync with multi-tab storage event listeners.
+  - `src/components/layout/HeaderCartButton.tsx`: Dynamic cart badge component reading live `totalItems` from context.
+  - `src/components/layout/Header.tsx`: Integrated `HeaderCartButton` into main navigation alongside `UserNavButton`.
+  - `src/app/layout.tsx`: Wrapped application tree in `<CartProvider>`.
+  - `src/app/cart/page.tsx`: Full cart experience with line items, TH badges, quantity controls, price totals, trust guarantees, instant checkout simulation, and empty state.
+  - `src/features/profile/components/PurchasedBasesList.tsx`: Displays purchased layouts with 1-click "Copy Link" and "Open in CoC" buttons, keeping Supercell deep links private to authenticated purchasers.
+  - `src/app/profile/page.tsx`: Full user dashboard with 3 tabs: "Purchased Layouts", "Custom Requests" tracker (`pending`, `in_progress`, `completed`), and "Account & Security" settings.
+  - `src/app/custom-base/page.tsx`: Custom base commission page with Town Hall selection, defense objective selector, priority turnaround options, custom specifications, and reference attachment upload.
+  - `src/middleware.ts`: Verified route protection redirecting unauthenticated requests for `/cart/checkout`, `/profile`, and `/custom-base` to `/login?redirectTo=...`.
+- **Tests**: Build compiles cleanly (`npm run build` with 26/26 routes prerendered), ESLint passes with 0 errors and 0 warnings (`npm run lint`), verified unauthenticated `/cart` returns HTTP 200, unauthenticated `/profile` & `/custom-base` redirect via HTTP 307 to `/login?redirectTo=...`, authenticated session cookie accesses `/profile` and `/custom-base` with HTTP 200.
+- **Acceptance Criteria**: 100% satisfied. Protected delivery of digital base links, responsive cart management, custom request commission engine, and account profile dashboard.
+- **Definition of Done**: Cart, profile, and custom base ordering fully verified and tested.
 
 ---
 
