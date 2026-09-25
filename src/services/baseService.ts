@@ -220,3 +220,11 @@ export async function getBaseById(id: string): Promise<BaseProduct | null> {
   const all = await getAllBases();
   return all.find((b) => b.id === id) || null;
 }
+
+/**
+ * Fetches bases filtered by Town Hall level
+ */
+export async function getBasesByTownHall(level: number): Promise<BaseProduct[]> {
+  const all = await getAllBases();
+  return all.filter((b) => b.townHallLevel === level);
+}

@@ -87,23 +87,24 @@ This master roadmap organizes the complete reconstruction of the OPICOC platform
 ---
 
 ### PHASE 04: Core Public Pages & Base Layout Catalogues
-- **Objective**: Deliver all public-facing catalogue routes (`/all-products`, `/bases/th/:th`, `/bases/:id`) and informational content pages (`/about`, `/faq`, `/contact-us`, `/terms-conditions`, `/privacy-policy`).
-- **Prerequisites**: Phase 03 completed.
-- **Implementation Tasks**:
-  1. Implement Base Catalogue page (`/all-products`) with server-driven search, filtering, and pagination.
-  2. Implement Town Hall specific catalogue (`/bases/th/[th]`).
-  3. Implement individual base detail page (`/bases/[id]`) with OpenGraph cards and defensive focus badges.
-  4. Build About page with company story and builder credentials.
-  5. Build FAQ page with accessible animated accordions and FAQPage JSON-LD schema.
-  6. Build Contact Us form with validation and honeypot spam protection.
-  7. Build Legal pages (`/terms-conditions`, `/privacy-policy`).
-- **Files/Modules Expected**:
-  - `src/app/all-products/page.tsx`, `src/app/bases/th/[th]/page.tsx`, `src/app/bases/[id]/page.tsx`.
-  - `src/app/about/page.tsx`, `src/app/faq/page.tsx`, `src/app/contact-us/page.tsx`.
-  - `src/features/bases/components/BaseCard.tsx`, `src/features/bases/components/BaseFilterBar.tsx`.
-- **Tests**: Search, filter, and pagination work via URL search params; 301 redirect from `/FAQ's` to `/faq`; forms validate with Zod.
-- **Acceptance Criteria**: All public routes operational with crawlable server-rendered HTML.
-- **Definition of Done**: Core public pages verified and reviewed against quality gates.
+- **Status**: Completed
+- **Delivered**:
+  - `src/components/ui/accordion.tsx`: Radix UI animated accessible accordion primitive (`@radix-ui/react-accordion`).
+  - `src/features/bases/components/BaseCard.tsx`: Reusable responsive base card with badges, validity countdown, pricing, and Add-to-Cart triggers.
+  - `src/features/bases/components/BaseFilterBar.tsx`: Deep-linkable search, town hall pill filter, and sorting controls.
+  - `src/features/contact/components/ContactForm.tsx`: Zod-validated contact form with honeypot bot trap and optimistic feedback.
+  - `src/app/all-products/page.tsx`: Server-rendered catalogue with search, Town Hall filtering, sorting, pagination, and empty state.
+  - `src/app/bases/th/[th]/page.tsx`: Programmatic Town Hall landing pages for TH15-TH18 with custom graphics, metadata, and static params.
+  - `src/app/bases/[id]/page.tsx`: Individual base detail permalink page with full defensive specs, sticky purchasing card, and related bases.
+  - `src/app/about/page.tsx`: Company story, builder credentials, and defense philosophy (resolving legacy V1 empty about bug).
+  - `src/app/faq/page.tsx`: Interactive FAQ with animated accordions and `FAQPage` JSON-LD rich snippet schema.
+  - `src/app/contact-us/page.tsx`: Contact page with direct builder channels, response time guarantee, and contact form.
+  - `src/app/terms-conditions/page.tsx`: Comprehensive terms of service with digital goods licensing and Supercell fair play policies.
+  - `src/app/privacy-policy/page.tsx`: Transparent privacy policy disclosing minimal data retention and zero credential sharing.
+  - `next.config.ts`: Added 301/308 redirects from `/FAQ's` and `/faqs` to `/faq`.
+- **Tests**: Build compiles with 0 errors (`npm run build`), ESLint passes with 0 errors and 0 warnings (`npm run lint`), verified all 8 public routes return HTTP 200, verified 308 redirect on `/FAQ's`, verified 0 layout link leaks on `/bases/[id]`, verified `FAQPage` JSON-LD schema.
+- **Acceptance Criteria**: 100% satisfied. All public routes operational with crawlable server-rendered HTML.
+- **Definition of Done**: Core public pages verified, tested against quality gates, and committed.
 
 ---
 
