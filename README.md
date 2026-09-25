@@ -10,7 +10,7 @@ OPICOC V2 is a ground-up reconstruction of the OPICOC platform. It replaces a le
 
 - **Production Domain**: `https://www.opicoc.cc/`
 - **Rebuild Codename**: OPICOC V2
-- **Current Phase**: Phase 01: Discovery, Audit & Project Foundation (Complete)
+- **Current Phase**: Phase 03: High-Performance Homepage Rebuild (Complete)
 
 ---
 
@@ -105,9 +105,9 @@ npm run lint
 
 ## 📑 Rebuild Master Plan
 - **Phase 01**: Discovery, Audit & Project Foundation *(Complete)*
-- **Phase 02**: Design System, Theme Tokens & Global Shell *(Next Phase)*
-- **Phase 03**: Homepage
-- **Phase 04**: Core Public Pages & Catalogues
+- **Phase 02**: Design System, Theme Tokens & Global Shell *(Complete)*
+- **Phase 03**: High-Performance Homepage Rebuild *(Complete)*
+- **Phase 04**: Core Public Pages & Catalogues *(Next Phase)*
 - **Phase 05**: Authentication
 - **Phase 06**: Dashboard, Custom Base Orders & Cart
 - **Phase 07**: Admin System
