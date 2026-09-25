@@ -3,7 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { DesktopNav } from "@/components/layout/DesktopNav";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { ShoppingCart, User } from "lucide-react";
+import { UserNavButton } from "@/components/layout/UserNavButton";
+import { ShoppingCart } from "lucide-react";
 
 export function Header() {
   return (
@@ -48,13 +49,7 @@ export function Header() {
           </Link>
 
           {/* User Sign In / Profile Button */}
-          <Link
-            href="/login"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-          >
-            <User className="w-3.5 h-3.5 text-amber-500" />
-            Sign In
-          </Link>
+          <UserNavButton />
         </div>
       </div>
     </header>
