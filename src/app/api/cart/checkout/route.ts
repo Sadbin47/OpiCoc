@@ -1,26 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { z } from "zod";
+import { CheckoutPayloadSchema } from "@/lib/validation";
+import { checkRateLimit, getClientIp, RATE_LIMIT_PROFILES } from "@/lib/rateLimit";
 import { db } from "@/db/client";
 import { emailService } from "@/services/emailService";
 
 const SESSION_COOKIE = "opicoc_session";
 
-const CheckoutItemSchema = z.object({
-  baseId: z.string(),
-  priceCents: z.number().int().positive(),
-  title: z.string(),
-});
-
-const CheckoutPayloadSchema = z.object({
-  items: z.array(CheckoutItemSchema).min(1, "Cart must contain at least one item."),
-  paymentProvider: z.enum(["STRIPE", "PAYPAL", "SIMULATED"]).default("SIMULATED"),
-  paymentId: z.string().optional(),
-});
-
 export async function POST(request: NextRequest) {
+  // 1. Enforce Defensive Rate Limiting (10 checkouts / 60s per IP)
+  const clientIp = getClientIp(request.headers);
+  const rateLimitResult = checkRateLimit(`checkout:${clientIp}`, RATE_LIMIT_PROFILES.CHECKOUT);
+
+  if (!rateLimitResult.success) {
+    return NextResponse.json(
+      {
+        error: "Too many checkout requests. Please wait a moment before trying again.",
+        retryAfter: rateLimitResult.retryAfter,
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": rateLimitResult.retryAfter.toString(),
+          "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+          "X-RateLimit-Remaining": "0",
+          "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+        },
+      }
+    );
+  }
+
   try {
-    // 1. Authenticate Session
+    // 2. Authenticate Session
     const sessionCookie = request.cookies.get(SESSION_COOKIE)?.value;
     let user: { id?: string; email?: string; firstName?: string } | null = null;
 

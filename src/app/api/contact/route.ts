@@ -1,19 +1,35 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { z } from "zod";
+import { ContactFormSchema } from "@/lib/validation";
+import { checkRateLimit, getClientIp, RATE_LIMIT_PROFILES } from "@/lib/rateLimit";
 import { db } from "@/db/client";
 
-const ContactRequestSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Invalid email address format."),
-  subject: z.string().min(3, "Subject must be at least 3 characters."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
-});
-
 export async function POST(request: NextRequest) {
+  // 1. Enforce Defensive Rate Limiting (5 submissions / 60s per IP)
+  const clientIp = getClientIp(request.headers);
+  const rateLimitResult = checkRateLimit(`contact:${clientIp}`, RATE_LIMIT_PROFILES.CONTACT);
+
+  if (!rateLimitResult.success) {
+    return NextResponse.json(
+      {
+        error: "Too many contact inquiries submitted. Please slow down and try again later.",
+        retryAfter: rateLimitResult.retryAfter,
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": rateLimitResult.retryAfter.toString(),
+          "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+          "X-RateLimit-Remaining": "0",
+          "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+        },
+      }
+    );
+  }
+
   try {
     const body = await request.json();
-    const result = ContactRequestSchema.safeParse(body);
+    const result = ContactFormSchema.safeParse(body);
 
     if (!result.success) {
       return NextResponse.json(
