@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
         destination: "/all-products",
         permanent: true,
       },
+      {
+        source: "/adminDashboard",
+        destination: "/admin",
+        permanent: true,
+      },
     ];
   },
 };

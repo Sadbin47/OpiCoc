@@ -100,6 +100,8 @@ export type CustomRequestStatus = "pending" | "in_progress" | "completed" | "rej
 export interface CustomBaseRequest {
   id: string;
   userId: string;
+  userName?: string;
+  userEmail?: string;
   townHall: string;
   defenseFocus: string;
   requirements: string;
@@ -110,3 +112,56 @@ export interface CustomBaseRequest {
   builderNotes?: string;
   completedLayoutUrl?: string;
 }
+
+/**
+ * Support / Contact message received from contact form
+ */
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+  repliedAt?: string;
+  replyText?: string;
+}
+
+/**
+ * Newsletter subscriber record
+ */
+export interface NewsletterSubscriber {
+  id: string;
+  email: string;
+  subscribedAt: string;
+  status: "active" | "unsubscribed";
+}
+
+/**
+ * Registered user account for administrative management
+ */
+export interface AdminUserAccount {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: "user" | "admin";
+  avatarUrl?: string;
+  createdAt: string;
+  lastLoginAt?: string;
+  isVerified: boolean;
+}
+
+/**
+ * Dashboard aggregate metric statistics
+ */
+export interface AdminMetricStats {
+  totalBases: number;
+  pendingRequests: number;
+  unreadMessages: number;
+  totalSubscribers: number;
+  totalUsers: number;
+  totalRevenueEst: number;
+}
+

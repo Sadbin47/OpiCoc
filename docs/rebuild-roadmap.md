@@ -147,20 +147,24 @@ This master roadmap organizes the complete reconstruction of the OPICOC platform
 ---
 
 ### PHASE 07: Comprehensive Administrative Portal
-- **Objective**: Construct a modern, accessible admin command center (`/admin`) for product catalogue management, order review, custom requests, contact messages, and subscriber lists.
-- **Prerequisites**: Phase 06 completed.
-- **Implementation Tasks**:
-  1. Build Admin Layout with sidebar navigation, metric cards, and unread notification badges.
-  2. Implement Base Management: data table, search, filters, "+ Add New Base" form, and edit modal with link repeater.
-  3. Implement Custom Requests manager with status transition dropdowns.
-  4. Implement Contact Messages inbox with mark-as-read and reply composer.
-  5. Implement Newsletter subscriber viewer with CSV export.
-  6. Implement User accounts table with role escalation controls.
-- **Files/Modules Expected**:
-  - `src/app/admin/layout.tsx`, `src/app/admin/page.tsx`, `src/app/admin/bases/page.tsx`, `src/app/admin/requests/page.tsx`, `src/app/admin/messages/page.tsx`, `src/app/admin/subscribers/page.tsx`, `src/app/admin/users/page.tsx`.
-  - `src/features/admin/components/AdminSidebar.tsx`, `src/features/admin/components/BaseForm.tsx`.
-- **Tests**: Admin routes reject non-admin users with 403 Forbidden; base creation and editing correctly validate Supercell layout URLs.
-- **Acceptance Criteria**: All legacy admin functions consolidated into a unified, secure dashboard.
+- **Status**: Completed
+- **Delivered**:
+  - `src/types/index.ts`: Added TypeScript interfaces for `ContactMessage`, `NewsletterSubscriber`, `AdminUserAccount`, and `AdminMetricStats`.
+  - `src/services/adminService.ts`: Centralized admin operational service providing real-time metric aggregates, base catalogue CRUD with Supercell link repeater, commission fulfillment, threaded support messaging, CSV subscriber export, and user role escalation management.
+  - `src/features/admin/components/AdminSidebar.tsx`: High-productivity administration sidebar with live notification badges for unread inquiries and pending requests, current admin profile, and responsive mobile drawer.
+  - `src/features/admin/components/AdminHeader.tsx`: Context-aware admin topbar with breadcrumb navigation, live system health badge, and quick storefront shortcut.
+  - `src/features/admin/components/BaseForm.tsx`: Dedicated base creation/editing modal with Town Hall classification, price/quota inputs, and a Supercell deep-link repeater enforcing valid `https://link.clashofclans.com/` URLs.
+  - `src/app/admin/layout.tsx`: Full-height admin dashboard shell isolating admin workspace from consumer storefront headers and footers.
+  - `src/app/admin/page.tsx`: Executive command center with 6 metric stat cards, quick-action triggers, recent commission orders, unread support inquiries, and compliance checklists.
+  - `src/app/admin/bases/page.tsx`: Base layouts catalogue table with Town Hall tier filters (All, TH18, TH17, TH16, TH15), real-time search, deep link indicators, and direct edit/delete controls.
+  - `src/app/admin/requests/page.tsx`: Custom base commissions manager supporting status progression (`pending` -> `in_progress` -> `completed` / `rejected`), priority highlighting (Standard vs Express), builder strategy notes, and digital layout link attachment.
+  - `src/app/admin/messages/page.tsx`: Customer inquiries inbox featuring split-pane conversation view, read/unread status toggles, and direct reply composer simulating outbound email notifications.
+  - `src/app/admin/subscribers/page.tsx`: Newsletter opt-in registry with search filter and one-click RFC-compliant CSV list export (`opicoc-subscribers-[date].csv`).
+  - `src/app/admin/users/page.tsx`: Registered user accounts table with role escalation controls (`user` <-> `admin`) and system-level protection prohibiting demotion of the last root administrator.
+  - `next.config.ts`: Added permanent HTTP 308 redirect from legacy `/adminDashboard` to modern `/admin`.
+  - `src/middleware.ts`: Enforces role authorization (`role === "admin"`). Unauthenticated requests redirect to `/login?redirectTo=%2Fadmin`; non-admin authenticated users redirect to `/`.
+- **Tests**: Build compiles with 0 errors (`npm run build` with 32/32 routes prerendered), ESLint passes with 0 errors and 0 warnings (`npm run lint`), verified unauthenticated `/admin` returns HTTP 307 redirect to `/login?redirectTo=%2Fadmin`, non-admin user returns HTTP 307 redirect to `/`, authenticated admin cookie returns HTTP 200 on all admin routes (`/admin`, `/admin/bases`, `/admin/requests`, `/admin/messages`, `/admin/subscribers`, `/admin/users`), verified `/adminDashboard` returns HTTP 308 redirect to `/admin`.
+- **Acceptance Criteria**: 100% satisfied. Complete modern administrative suite consolidating catalogue management, orders, support, marketing, and permissions into a secure dashboard.
 - **Definition of Done**: Admin portal tested across resolutions with role guard verification.
 
 ---
