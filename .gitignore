@@ -31,7 +31,9 @@ pnpm-debug.log*
 *.db
 *.sql
 *.tar.gz
+*.gz
 *.zip
+backups/
 
 # Operating System files
 .DS_Store
