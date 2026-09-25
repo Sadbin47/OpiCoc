@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import {
   Sheet,
@@ -13,12 +13,52 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Shield, ExternalLink, Mail } from "lucide-react";
+import { Menu, Shield, ExternalLink, Mail, User, ShieldCheck, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UserProfile } from "@/types";
+import { logoutUser } from "@/services/authService";
+
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
+
+function getSnapshot(): string {
+  if (typeof document === "undefined") return "";
+  const match = document.cookie.match(/opicoc_session=([^;]+)/);
+  return match ? match[1] : "";
+}
+
+function getServerSnapshot(): string {
+  return "";
+}
 
 export function MobileNav() {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const sessionStr = React.useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
+
+  const user = React.useMemo<UserProfile | null>(() => {
+    if (!sessionStr) return null;
+    try {
+      return JSON.parse(decodeURIComponent(sessionStr));
+    } catch {
+      return null;
+    }
+  }, [sessionStr]);
+
+  const handleLogout = () => {
+    logoutUser();
+    setOpen(false);
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -101,6 +141,77 @@ export function MobileNav() {
                 )}
               </Link>
             ))}
+          </div>
+
+          {/* User Account & Access */}
+          <div className="space-y-1.5 pt-2 border-t border-[#1E232B]">
+            <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider px-2 block mb-2">
+              Account
+            </span>
+            {user ? (
+              <div className="space-y-1">
+                <div className="px-3 py-2 rounded-lg bg-[#14181F] border border-[#262B35] flex items-center justify-between">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-amber-500 text-black font-bold text-xs flex items-center justify-center shrink-0">
+                      {user.firstName.charAt(0)}
+                    </div>
+                    <span className="text-xs font-semibold text-[#F1F5F9] truncate">
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono text-amber-400 uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                    {user.role}
+                  </span>
+                </div>
+
+                {user.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Admin Command Center</span>
+                  </Link>
+                )}
+
+                <Link
+                  href="/profile"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#CBD5E1] hover:bg-[#161A22] hover:text-[#F1F5F9] transition"
+                >
+                  <User className="w-3.5 h-3.5 text-amber-400" />
+                  <span>My Profile & Bases</span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-red-400 hover:bg-red-500/10 transition cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-[#262B35] bg-[#14181F] text-xs font-semibold text-[#F1F5F9] hover:bg-[#1E232B] transition"
+                >
+                  <User className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  href="/registration"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-amber-500/20 border border-amber-500/40 text-xs font-semibold text-amber-300 hover:bg-amber-500/30 transition"
+                >
+                  <span>Register</span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

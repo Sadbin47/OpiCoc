@@ -71,18 +71,18 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-16 sm:mb-20">
           {stats.map((s, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-xl border border-[#262B35] bg-[#12151B] flex flex-col justify-between"
+              className="p-4 sm:p-6 rounded-xl border border-[#262B35] bg-[#12151B] flex flex-col justify-between"
             >
-              <span className="font-mono text-3xl sm:text-4xl font-bold text-amber-400">
+              <span className="font-mono text-2xl sm:text-4xl font-bold text-amber-400">
                 {s.value}
               </span>
-              <div className="mt-3">
-                <span className="text-sm font-semibold text-[#F1F5F9] block">{s.label}</span>
-                <span className="text-xs text-[#64748B] mt-0.5 block">{s.detail}</span>
+              <div className="mt-2.5 sm:mt-3">
+                <span className="text-xs sm:text-sm font-semibold text-[#F1F5F9] block">{s.label}</span>
+                <span className="text-[11px] sm:text-xs text-[#64748B] mt-0.5 block">{s.detail}</span>
               </div>
             </div>
           ))}

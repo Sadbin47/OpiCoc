@@ -72,46 +72,46 @@ export default function ContactUsPage() {
 
               <div className="space-y-3 text-xs">
                 {/* Email */}
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
                   <div className="flex items-center gap-2 text-[#CBD5E1]">
-                    <Mail className="w-4 h-4 text-amber-400" />
+                    <Mail className="w-4 h-4 text-amber-400 shrink-0" />
                     <span>Support Email</span>
                   </div>
                   <a
                     href={`mailto:${siteConfig.supportEmail}`}
-                    className="font-mono text-amber-400 hover:underline"
+                    className="font-mono text-amber-400 hover:underline truncate"
                   >
                     {siteConfig.supportEmail}
                   </a>
                 </div>
 
                 {/* Discord */}
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
                   <div className="flex items-center gap-2 text-[#CBD5E1]">
-                    <MessageCircle className="w-4 h-4 text-[#5865F2]" />
+                    <MessageCircle className="w-4 h-4 text-[#5865F2] shrink-0" />
                     <span>Discord Community</span>
                   </div>
                   <a
                     href={siteConfig.socials.discord}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-sky-400 hover:underline"
+                    className="font-mono text-sky-400 hover:underline truncate"
                   >
                     Join Server
                   </a>
                 </div>
 
                 {/* YouTube */}
-                <div className="flex items-center justify-between p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 p-3 rounded-lg bg-[#1A1E26] border border-[#262B35]">
                   <div className="flex items-center gap-2 text-[#CBD5E1]">
-                    <Sparkles className="w-4 h-4 text-red-400" />
+                    <Sparkles className="w-4 h-4 text-red-400 shrink-0" />
                     <span>Defense Replays</span>
                   </div>
                   <a
                     href={siteConfig.socials.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-mono text-red-400 hover:underline"
+                    className="font-mono text-red-400 hover:underline truncate"
                   >
                     @Opi333coc
                   </a>

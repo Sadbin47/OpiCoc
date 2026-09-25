@@ -74,12 +74,12 @@ export function VideoSection() {
                   </div>
 
                   {/* Bottom Video Meta Bar */}
-                  <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between text-xs text-[#CBD5E1] bg-black/60 backdrop-blur-sm px-3.5 py-2 rounded-lg border border-white/10">
-                    <span className="flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5 text-amber-400" />
-                      TH18 Hard Mode Vs Super Archer & Root Rider
+                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 text-[11px] sm:text-xs text-[#CBD5E1] bg-black/70 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
+                    <span className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                      <Shield className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span className="truncate">TH18 Hard Mode Vs Super Archer & Root Rider</span>
                     </span>
-                    <span className="font-mono text-[#94A3B8] flex items-center gap-1">
+                    <span className="font-mono text-[#94A3B8] hidden sm:flex items-center gap-1 shrink-0">
                       <Volume2 className="w-3.5 h-3.5" />
                       Click to Play (Lazy Loaded)
                     </span>

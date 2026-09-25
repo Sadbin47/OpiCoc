@@ -340,7 +340,7 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
               </Button>
             </div>
 
-            <MotionContainer animation="stagger" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <MotionContainer animation="stagger" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {related.map((rel) => (
                 <BaseCard key={rel.id} base={rel} />
               ))}

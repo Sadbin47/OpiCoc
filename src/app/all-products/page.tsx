@@ -104,7 +104,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
         {paginatedBases.length > 0 ? (
           <MotionContainer
             animation="stagger"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
           >
             {paginatedBases.map((base, idx) => (
               <BaseCard key={base.id} base={base} priority={idx < 4} />

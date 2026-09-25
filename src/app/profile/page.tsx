@@ -119,25 +119,25 @@ export default function ProfilePage() {
         )}
 
         {/* User Profile Header Card */}
-        <div className="rounded-2xl border border-[#262B35] bg-[#12151B] p-6 sm:p-8 mb-10 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500/20 to-sky-500/20 border border-amber-500/40 flex items-center justify-center text-xl font-clash font-bold text-amber-400">
+        <div className="rounded-2xl border border-[#262B35] bg-[#12151B] p-4 sm:p-6 md:p-8 mb-8 sm:mb-10 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
+          <div className="flex items-center gap-3.5 sm:gap-5">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-500/20 to-sky-500/20 border border-amber-500/40 flex items-center justify-center text-lg sm:text-xl font-clash font-bold text-amber-400 shrink-0">
               {user.firstName.charAt(0)}
               {user.lastName.charAt(0)}
             </div>
-            <div className="space-y-1">
+            <div className="space-y-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h1 className="font-clash text-2xl font-bold text-[#F1F5F9]">
+                <h1 className="font-clash text-xl sm:text-2xl font-bold text-[#F1F5F9] truncate">
                   {user.firstName} {user.lastName}
                 </h1>
-                <Badge variant="tactical" className="text-[10px] uppercase font-mono">
+                <Badge variant="tactical" className="text-[10px] uppercase font-mono shrink-0">
                   {user.role}
                 </Badge>
               </div>
-              <p className="text-xs text-[#94A3B8] font-mono">{user.email}</p>
+              <p className="text-xs text-[#94A3B8] font-mono truncate">{user.email}</p>
               <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 pt-0.5">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Verified Account • Instant Delivery Active</span>
+                <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Verified Account • Instant Delivery Active</span>
               </div>
             </div>
           </div>
@@ -163,17 +163,17 @@ export default function ProfilePage() {
         </div>
 
         {/* Tab Controls Navigation */}
-        <div className="flex items-center gap-2 border-b border-[#262B35] mb-8 pb-px">
+        <div className="flex items-center gap-2 border-b border-[#262B35] mb-8 pb-px overflow-x-auto max-w-full">
           <button
             type="button"
             onClick={() => setActiveTab("purchased")}
-            className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all whitespace-nowrap shrink-0 ${
               activeTab === "purchased"
                 ? "border-amber-500 text-amber-400"
                 : "border-transparent text-[#94A3B8] hover:text-[#F1F5F9]"
             }`}
           >
-            <Package className="w-4 h-4" />
+            <Package className="w-4 h-4 shrink-0" />
             <span>Purchased Bases</span>
             <span className="ml-1 px-1.5 py-0.2 rounded-full bg-[#1A1E26] text-[10px] font-mono text-[#CBD5E1]">
               {purchases.length}
@@ -183,13 +183,13 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={() => setActiveTab("requests")}
-            className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all whitespace-nowrap shrink-0 ${
               activeTab === "requests"
                 ? "border-amber-500 text-amber-400"
                 : "border-transparent text-[#94A3B8] hover:text-[#F1F5F9]"
             }`}
           >
-            <Layers className="w-4 h-4" />
+            <Layers className="w-4 h-4 shrink-0" />
             <span>Custom Requests</span>
             <span className="ml-1 px-1.5 py-0.2 rounded-full bg-[#1A1E26] text-[10px] font-mono text-[#CBD5E1]">
               {requests.length}
@@ -199,13 +199,13 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={() => setActiveTab("settings")}
-            className={`flex items-center gap-2 px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all ${
+            className={`flex items-center gap-2 px-3.5 sm:px-4 py-3 text-xs sm:text-sm font-semibold border-b-2 transition-all whitespace-nowrap shrink-0 ${
               activeTab === "settings"
                 ? "border-amber-500 text-amber-400"
                 : "border-transparent text-[#94A3B8] hover:text-[#F1F5F9]"
             }`}
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="w-4 h-4 shrink-0" />
             <span>Account Security</span>
           </button>
         </div>

@@ -23,11 +23,11 @@ export default function TermsConditionsPage() {
           <h1 className="font-clash text-4xl sm:text-5xl font-bold tracking-tight text-[#F1F5F9]">
             Terms and Conditions
           </h1>
-          <p className="text-xs font-mono text-[#94A3B8]">Last Updated: March 2026 • Version 2.0</p>
+          <p className="text-xs font-mono text-[#94A3B8]">Last Updated: March 2026</p>
         </div>
 
         {/* Content Body */}
-        <div className="max-w-3xl rounded-2xl border border-[#262B35] bg-[#12151B] p-6 sm:p-10 space-y-8 text-sm text-[#94A3B8] leading-relaxed">
+        <div className="max-w-3xl rounded-2xl border border-[#262B35] bg-[#12151B] p-5 sm:p-8 md:p-10 space-y-8 text-sm text-[#94A3B8] leading-relaxed">
           {/* Section 1 */}
           <section className="space-y-3">
             <h2 className="font-clash text-xl font-bold text-[#F1F5F9]">1. Agreement to Terms</h2>

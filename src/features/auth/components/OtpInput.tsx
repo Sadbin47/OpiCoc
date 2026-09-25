@@ -106,7 +106,7 @@ export function OtpInput({
   return (
     <div className="space-y-4">
       {/* 6 Segmented Inputs */}
-      <div className="flex items-center justify-center gap-2 sm:gap-3" onPaste={handlePaste}>
+      <div className="flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3" onPaste={handlePaste}>
         {digits.map((digit, idx) => (
           <input
             key={idx}
@@ -121,7 +121,7 @@ export function OtpInput({
             disabled={disabled}
             onChange={(e) => handleChange(idx, e)}
             onKeyDown={(e) => handleKeyDown(idx, e)}
-            className="w-11 h-13 sm:w-12 sm:h-14 text-center font-mono text-xl sm:text-2xl font-bold rounded-lg border border-[#262B35] bg-[#1A1E26] text-[#F1F5F9] focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all disabled:opacity-50"
+            className="w-9 h-11 xs:w-10 xs:h-12 sm:w-12 sm:h-14 text-center font-mono text-base xs:text-lg sm:text-2xl font-bold rounded-lg border border-[#262B35] bg-[#1A1E26] text-[#F1F5F9] focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition-all disabled:opacity-50"
             aria-label={`Digit ${idx + 1} of verification code`}
             autoComplete={idx === 0 ? "one-time-code" : "off"}
           />

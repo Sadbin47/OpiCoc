@@ -27,7 +27,7 @@ export default function AuthLayout({
         </div>
 
         {/* Brand Card Wrapper */}
-        <div className="rounded-2xl border border-[#262B35] bg-[#12151B] p-6 sm:p-10 shadow-2xl space-y-6">
+        <div className="rounded-2xl border border-[#262B35] bg-[#12151B] p-5 sm:p-8 md:p-10 shadow-2xl space-y-6">
           {/* Header Brand Identity */}
           <div className="text-center space-y-3">
             <Link href="/" className="inline-flex items-center gap-2 group">

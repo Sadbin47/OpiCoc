@@ -165,9 +165,9 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
         </div>
 
         {/* Quick Tier Switcher Navigation */}
-        <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#1E232B]">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-[#64748B]">Switch Tier:</span>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 pb-4 border-b border-[#1E232B]">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="text-xs font-mono text-[#64748B] hidden xs:inline">Switch Tier:</span>
             {[18, 17, 16, 15].map((lvl) => {
               const isCurrent = lvl === level;
               return (
@@ -176,7 +176,7 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
                   asChild
                   variant={isCurrent ? "primary" : "outline"}
                   size="sm"
-                  className="font-mono text-xs"
+                  className="font-mono text-xs px-2.5 sm:px-3"
                 >
                   <Link href={`/bases/th/${lvl}`}>TH{lvl}</Link>
                 </Button>
@@ -184,7 +184,7 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
             })}
           </div>
 
-          <Button asChild variant="ghost" size="sm" className="text-xs text-[#94A3B8] hover:text-[#F1F5F9]">
+          <Button asChild variant="ghost" size="sm" className="text-xs text-[#94A3B8] hover:text-[#F1F5F9] p-0 sm:px-3">
             <Link href="/all-products" className="flex items-center gap-1">
               <ArrowLeft className="w-3.5 h-3.5" />
               All Products
@@ -196,7 +196,7 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
         {bases.length > 0 ? (
           <MotionContainer
             animation="stagger"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
           >
             {bases.map((base, idx) => (
               <BaseCard key={base.id} base={base} priority={idx < 4} />

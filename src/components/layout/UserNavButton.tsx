@@ -39,17 +39,36 @@ export function UserNavButton() {
   if (user) {
     if (user.role === "admin") {
       return (
-        <div className="hidden sm:inline-flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Mobile Admin Icon Button */}
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="sm:hidden flex items-center justify-center h-9 w-9 rounded-md border border-amber-500/40 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            aria-label="Admin Command Panel"
+            title="Admin Panel"
+          >
+            <ShieldCheck className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/profile"
+            className="sm:hidden flex items-center justify-center h-9 w-9 rounded-md border border-[#262B35] bg-[#12151B] text-amber-400 hover:text-[#F1F5F9] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            aria-label={`Profile (${user.firstName})`}
+            title={user.firstName}
+          >
+            <User className="w-4 h-4" />
+          </Link>
+
+          {/* Desktop Buttons */}
+          <Link
+            href="/admin"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
             Admin Panel
           </Link>
           <Link
             href="/profile"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             <User className="w-3.5 h-3.5 text-amber-400" />
             <span className="truncate max-w-[100px]">{user.firstName}</span>
@@ -59,23 +78,49 @@ export function UserNavButton() {
     }
 
     return (
-      <Link
-        href="/profile"
-        className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-      >
-        <User className="w-3.5 h-3.5 text-amber-400" />
-        <span className="truncate max-w-[100px]">{user.firstName}</span>
-      </Link>
+      <>
+        {/* Mobile Profile Icon Button */}
+        <Link
+          href="/profile"
+          className="sm:hidden flex items-center justify-center h-9 w-9 rounded-md border border-[#262B35] bg-[#12151B] text-amber-400 hover:text-[#F1F5F9] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+          aria-label={`Profile (${user.firstName})`}
+          title={user.firstName}
+        >
+          <User className="w-4 h-4" />
+        </Link>
+
+        {/* Desktop Profile Button */}
+        <Link
+          href="/profile"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+        >
+          <User className="w-3.5 h-3.5 text-amber-400" />
+          <span className="truncate max-w-[100px]">{user.firstName}</span>
+        </Link>
+      </>
     );
   }
 
   return (
-    <Link
-      href="/login"
-      className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-    >
-      <User className="w-3.5 h-3.5 text-amber-500" />
-      Sign In
-    </Link>
+    <>
+      {/* Mobile Sign In Icon Button */}
+      <Link
+        href="/login"
+        className="sm:hidden flex items-center justify-center h-9 w-9 rounded-md border border-[#262B35] bg-[#12151B] text-amber-400 hover:text-[#F1F5F9] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+        aria-label="Sign In"
+        title="Sign In"
+      >
+        <User className="w-4 h-4 text-amber-500" />
+      </Link>
+
+      {/* Desktop Sign In Button */}
+      <Link
+        href="/login"
+        className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+      >
+        <User className="w-3.5 h-3.5 text-amber-500" />
+        Sign In
+      </Link>
+    </>
   );
 }

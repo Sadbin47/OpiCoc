@@ -108,25 +108,25 @@ function LoginForm() {
       )}
 
       {/* Quick Account Access Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1] gap-2">
-        <span className="font-semibold text-amber-400">Quick Account Access:</span>
-        <div className="flex gap-2 w-full sm:w-auto">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1] gap-2.5">
+        <span className="font-semibold text-amber-400 text-center sm:text-left">Quick Demo Access:</span>
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => handleDemoLogin("admin")}
             disabled={isSubmitting}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-xs font-semibold transition-colors border border-amber-500/40 cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-xs font-semibold transition-colors border border-amber-500/40 cursor-pointer disabled:opacity-50 min-h-[38px]"
           >
-            <Shield className="w-3.5 h-3.5 text-amber-400" />
+            <Shield className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>Admin &rarr; /admin</span>
           </button>
           <button
             type="button"
             onClick={() => handleDemoLogin("user")}
             disabled={isSubmitting}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-xs font-semibold transition-colors border border-slate-700 cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-xs font-semibold transition-colors border border-slate-700 cursor-pointer disabled:opacity-50 min-h-[38px]"
           >
-            <User className="w-3.5 h-3.5 text-slate-400" />
+            <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <span>User &rarr; /profile</span>
           </button>
         </div>
