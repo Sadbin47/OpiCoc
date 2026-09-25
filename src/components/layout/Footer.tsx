@@ -161,20 +161,20 @@ export function Footer() {
         </div>
 
         {/* Bottom Disclaimer & Copyright */}
-        <div className="pt-10 mt-10 border-t border-[#1E232B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
+        <div className="pt-10 mt-10 border-t border-[#1E232B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
           <p>
             © {new Date().getFullYear()} OPICOC V2. All rights reserved. This site is not affiliated with, endorsed, sponsored, or specifically approved by Supercell.
           </p>
-          <div className="flex items-center gap-4 text-[#64748B]">
-            <Link href="/terms-conditions" className="hover:underline">
+          <div className="flex items-center gap-4 text-[#94A3B8]">
+            <Link href="/terms-conditions" className="hover:text-[#F1F5F9] hover:underline">
               Terms
             </Link>
             <span>•</span>
-            <Link href="/privacy-policy" className="hover:underline">
+            <Link href="/privacy-policy" className="hover:text-[#F1F5F9] hover:underline">
               Privacy
             </Link>
             <span>•</span>
-            <Link href="/faq" className="hover:underline">
+            <Link href="/faq" className="hover:text-[#F1F5F9] hover:underline">
               FAQs
             </Link>
           </div>

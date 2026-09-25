@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
+import { PageTransition } from "@/components/motion/PageTransition";
 import {
   ShieldCheck,
   Award,
@@ -51,7 +52,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="py-12 sm:py-20 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-20 bg-[#0B0D11]">
       <Container size="default">
         {/* Page Hero */}
         <div className="max-w-3xl space-y-4 mb-16">
@@ -204,6 +205,6 @@ export default function AboutPage() {
           </div>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }

@@ -8,6 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { HelpCircle, Sparkles, MessageCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -83,13 +85,8 @@ export default function FaqPage() {
   };
 
   return (
-    <div className="py-12 sm:py-20 bg-[#0B0D11]">
-      {/* Structured Data injection */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
+    <PageTransition className="py-12 sm:py-20 bg-[#0B0D11]">
+      <JsonLd schema={jsonLd} />
       <Container size="default">
         {/* Page Header */}
         <div className="max-w-3xl space-y-4 mb-14">
@@ -149,6 +146,6 @@ export default function FaqPage() {
           </div>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }

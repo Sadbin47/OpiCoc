@@ -135,13 +135,15 @@ export default function CustomBasePage() {
               {/* Town Hall Tier Select */}
               <div className="space-y-2">
                 <Label className="text-xs text-[#CBD5E1]">Town Hall Level</Label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div role="radiogroup" aria-label="Select Town Hall level" className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {["Town Hall 18", "Town Hall 17", "Town Hall 16", "Town Hall 15"].map((th) => {
                     const isSelected = townHall === th;
                     return (
                       <motion.button
                         key={th}
                         type="button"
+                        role="radio"
+                        aria-checked={isSelected}
                         onClick={() => setTownHall(th)}
                         whileTap={prefersReduced ? undefined : { scale: 0.97 }}
                         className={`relative p-3 rounded-lg text-xs font-mono font-semibold transition-all text-center select-none ${

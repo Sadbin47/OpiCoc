@@ -102,6 +102,7 @@ export function BaseFilterBar() {
           <select
             value={currentSort}
             onChange={(e) => updateFilters({ sort: e.target.value })}
+            aria-label="Sort base layouts"
             className="h-9 rounded-md border border-[#262B35] bg-[#1A1E26] px-2.5 py-1 text-xs text-[#F1F5F9] focus:outline-none focus:ring-1 focus:ring-amber-500"
           >
             {SORT_OPTIONS.map((opt) => (
@@ -115,8 +116,12 @@ export function BaseFilterBar() {
 
       {/* Town Hall Filter Pills Row */}
       <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#1E232B]">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs font-mono text-[#64748B] mr-1 hidden sm:inline flex items-center gap-1">
+        <div
+          role="tablist"
+          aria-label="Filter by Town Hall tier"
+          className="flex flex-wrap items-center gap-1.5"
+        >
+          <span className="text-xs font-mono text-[#94A3B8] mr-1 hidden sm:inline flex items-center gap-1">
             <Filter className="w-3 h-3 text-amber-500" /> Tiers:
           </span>
           {TOWN_HALL_OPTIONS.map((th) => {
@@ -125,6 +130,8 @@ export function BaseFilterBar() {
               <motion.button
                 key={th.value}
                 type="button"
+                role="tab"
+                aria-selected={isSelected}
                 onClick={() => updateFilters({ th: th.value || null })}
                 whileTap={prefersReduced ? undefined : { scale: 0.96 }}
                 className={cn(

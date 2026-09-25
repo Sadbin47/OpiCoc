@@ -109,13 +109,19 @@ export function TownHallSelector() {
         </div>
 
         {/* Town Hall Filter Tabs with shared-layout indicator */}
-        <div className="flex items-center gap-1.5 p-1 mb-8 rounded-lg bg-[#12151B] border border-[#262B35] w-fit max-w-full overflow-x-auto">
+        <div
+          role="tablist"
+          aria-label="Town Hall defensive tier filter"
+          className="flex items-center gap-1.5 p-1 mb-8 rounded-lg bg-[#12151B] border border-[#262B35] w-fit max-w-full overflow-x-auto"
+        >
           {FILTER_TABS.map((tab) => {
             const isActive = activeTab === tab.value;
             return (
               <button
                 key={tab.label}
                 type="button"
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => setActiveTab(tab.value)}
                 className={cn(
                   "relative px-4 py-2 text-xs font-mono font-semibold rounded-md transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 select-none whitespace-nowrap",

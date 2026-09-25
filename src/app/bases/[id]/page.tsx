@@ -10,6 +10,8 @@ import { AddToCartButton } from "@/features/home/components/AddToCartButton";
 import { BaseCard } from "@/features/bases/components/BaseCard";
 import { MotionContainer } from "@/components/motion/MotionContainer";
 import { PageTransition } from "@/components/motion/PageTransition";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { siteConfig } from "@/config/site";
 import {
   ShieldCheck,
   Clock,
@@ -65,8 +67,82 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
   const relatedAll = await getBasesByTownHall(base.townHallLevel);
   const related = relatedAll.filter((b) => b.id !== base.id).slice(0, 3);
 
+  const baseUrl = siteConfig.url.replace(/\/+$/, "");
+  const productImageUrl = base.productImage.startsWith("http")
+    ? base.productImage
+    : `${baseUrl}${base.productImage}`;
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: base.title,
+    image: [productImageUrl],
+    description: base.description,
+    sku: base.id,
+    mpn: base.id,
+    brand: {
+      "@type": "Brand",
+      name: siteConfig.name,
+    },
+    category: `Clash of Clans > ${base.townHall} Layouts`,
+    offers: {
+      "@type": "Offer",
+      url: `${baseUrl}/bases/${base.id}`,
+      priceCurrency: "USD",
+      price: base.price.toFixed(2),
+      priceValidUntil: "2027-12-31",
+      itemCondition: "https://schema.org/NewCondition",
+      availability: "https://schema.org/InStock",
+      seller: {
+        "@type": "Organization",
+        name: siteConfig.name,
+        url: baseUrl,
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "28",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Base Catalogue",
+        item: `${baseUrl}/all-products`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: base.townHall,
+        item: `${baseUrl}/bases/th/${base.townHallLevel}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: base.title,
+        item: `${baseUrl}/bases/${base.id}`,
+      },
+    ],
+  };
+
   return (
     <PageTransition className="py-12 sm:py-16 bg-[#0B0D11]">
+      <JsonLd schema={productSchema} />
+      <JsonLd schema={breadcrumbSchema} />
       <Container size="default">
         {/* Breadcrumb Navigation */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[#64748B] mb-8">

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/features/contact/components/ContactForm";
+import { PageTransition } from "@/components/motion/PageTransition";
 import {
   Mail,
   MessageCircle,
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function ContactUsPage() {
   return (
-    <div className="py-12 sm:py-20 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-20 bg-[#0B0D11]">
       <Container size="default">
         {/* Header */}
         <div className="max-w-3xl space-y-4 mb-14">
@@ -139,6 +140,6 @@ export default function ContactUsPage() {
           </div>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }

@@ -9,6 +9,8 @@ import { VideoSection } from "@/features/home/components/VideoSection";
 import { ReviewSection } from "@/features/home/components/ReviewSection";
 import { BrandPillarsSection } from "@/features/home/components/BrandPillarsSection";
 import { Container } from "@/components/layout/Container";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { siteConfig } from "@/config/site";
 import { Sparkles, BookOpen } from "lucide-react";
 
 export default async function HomePage() {
@@ -18,8 +20,25 @@ export default async function HomePage() {
     getReviews(),
   ]);
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: `${siteConfig.url}/assets/logo.png`,
+    description: siteConfig.description,
+    sameAs: Object.values(siteConfig.socials),
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: siteConfig.supportEmail,
+      contactType: "customer service",
+      availableLanguage: "English",
+    },
+  };
+
   return (
     <div className="flex flex-col">
+      <JsonLd schema={organizationSchema} />
       {/* 1. High-Impact Hero Section */}
       <HeroSection />
 

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { ShieldCheck, Lock } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="py-12 sm:py-20 bg-[#0B0D11]">
+    <PageTransition className="py-12 sm:py-20 bg-[#0B0D11]">
       <Container size="default">
         {/* Header */}
         <div className="max-w-3xl space-y-4 mb-12">
@@ -22,7 +23,7 @@ export default function PrivacyPolicyPage() {
           <h1 className="font-clash text-4xl sm:text-5xl font-bold tracking-tight text-[#F1F5F9]">
             Privacy Policy
           </h1>
-          <p className="text-xs font-mono text-[#64748B]">Last Updated: March 2026 • Version 2.0</p>
+          <p className="text-xs font-mono text-[#94A3B8]">Last Updated: March 2026 • Version 2.0</p>
         </div>
 
         {/* Content Body */}
@@ -148,6 +149,6 @@ export default function PrivacyPolicyPage() {
           </section>
         </div>
       </Container>
-    </div>
+    </PageTransition>
   );
 }
