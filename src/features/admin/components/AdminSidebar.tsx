@@ -14,6 +14,7 @@ import {
   ExternalLink,
   LogOut,
   X,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { adminService } from "@/services/adminService";
@@ -94,6 +95,13 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
       href: "/admin/users",
       icon: UserCheck,
       badge: null,
+    },
+    {
+      label: "Edit Homepage Live",
+      href: "/?edit=true",
+      icon: Sparkles,
+      badge: "CMS",
+      badgeColor: "bg-amber-500/20 text-amber-400 border border-amber-500/30",
     },
   ];
 

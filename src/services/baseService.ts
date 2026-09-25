@@ -1,5 +1,24 @@
 import { BaseProduct, BaseLayoutLink, TownHallLevel } from "@/types";
 import { db } from "@/db/client";
+import fs from "fs";
+import path from "path";
+
+const DATA_FILE_PATH = path.join(process.cwd(), "src", "db", "data", "bases.json");
+
+function getStoredBases(): BaseProduct[] | null {
+  try {
+    if (typeof window === "undefined" && fs.existsSync(DATA_FILE_PATH)) {
+      const raw = fs.readFileSync(DATA_FILE_PATH, "utf-8");
+      const list = JSON.parse(raw);
+      if (Array.isArray(list) && list.length > 0) {
+        return list.map(sanitizeBase);
+      }
+    }
+  } catch {
+    // Fallback if filesystem read unavailable
+  }
+  return null;
+}
 
 const API_BASE_URL = process.env.LEGACY_API_URL;
 
@@ -178,6 +197,11 @@ let inMemoryBasesCache: BaseProduct[] | null = null;
  * Fetches all available bases from backend with in-memory caching and fallback
  */
 export async function getAllBases(): Promise<BaseProduct[]> {
+  const fileBases = getStoredBases();
+  if (fileBases && fileBases.length > 0) {
+    return fileBases;
+  }
+
   if (inMemoryBasesCache) {
     return inMemoryBasesCache;
   }

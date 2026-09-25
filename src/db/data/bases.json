@@ -1,0 +1,127 @@
+[
+  {
+    "id": "69ad8e939e02deab05921114",
+    "title": "TH17 BEST CWL Base This Season",
+    "price": 46,
+    "badge": "1x3",
+    "description": "Engineered to defend against the most popular Town Hall 17 meta attack strategies in Clash of Clans. A high-efficiency anti-3 star layout designed for Clan War League dominance.",
+    "townHall": "Town Hall 17",
+    "townHallLevel": 17,
+    "productImage": "https://iili.io/q6FV8ut.md.png",
+    "createdBy": "OPICOC Pro Builders",
+    "maxSell": 100,
+    "seasonStartDate": "2026-03-08T00:00:00.000Z",
+    "seasonEndDate": "2026-05-07T00:00:00.000Z",
+    "validityDays": 42,
+    "links": [
+      {
+        "id": "th17-cwl-01",
+        "label": "Layout 1 (Main CWL Defense)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH17-CWL-PRO-01"
+      },
+      {
+        "id": "th17-cwl-02",
+        "label": "Layout 2 (Anti-Blimp Variation)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH17-CWL-PRO-02"
+      }
+    ]
+  },
+  {
+    "id": "69a729c46b2ef896c319aa73",
+    "title": "TH18 Best Base For Esports Tournament [Anti Ground & Flying]",
+    "price": 48,
+    "badge": "1x3",
+    "description": "Hard-mode verified esports tournament layout. Features asymmetrical trap corridors and compartmentalized core defense against Super Archers, Dragons, and Root Riders.",
+    "townHall": "Town Hall 18",
+    "townHallLevel": 18,
+    "productImage": "https://iili.io/q6Fiihu.md.png",
+    "createdBy": "OPICOC Pro Builders",
+    "maxSell": 100,
+    "seasonStartDate": "2026-03-01T00:00:00.000Z",
+    "seasonEndDate": "2026-06-29T00:00:00.000Z",
+    "validityDays": 95,
+    "links": [
+      {
+        "id": "th18-esp-01",
+        "label": "Layout 1 (Esports Tournament Anti-Air)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH18-ESPORTS-01"
+      },
+      {
+        "id": "th18-esp-02",
+        "label": "Layout 2 (Esports Tournament Anti-Smash)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH18-ESPORTS-02"
+      }
+    ]
+  },
+  {
+    "id": "69a485e3717516d14d5e2bc2",
+    "title": "TH-18 Anti-Ground Pushing Base For This Season",
+    "price": 60,
+    "badge": "1x5",
+    "description": "Complete 5-base defensive push pack engineered for top 200 Legend League play. Rotates defense setups to thwart scouting attacks and preserve maximum trophies.",
+    "townHall": "Town Hall 18",
+    "townHallLevel": 18,
+    "productImage": "https://iili.io/qqGBeX1.md.png",
+    "createdBy": "OPICOC Pro Builders",
+    "maxSell": 80,
+    "seasonStartDate": "2026-03-01T00:00:00.000Z",
+    "seasonEndDate": "2026-04-29T00:00:00.000Z",
+    "validityDays": 34,
+    "links": [
+      {
+        "id": "th18-push-01",
+        "label": "Layout 1 (Core Box Defense)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH18-PUSH-01"
+      },
+      {
+        "id": "th18-push-02",
+        "label": "Layout 2 (Ring Isolation Trap)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH18-PUSH-02"
+      }
+    ]
+  },
+  {
+    "id": "69a7247d6a150119dd422a93",
+    "title": "TH18 Clan War League Base Pack",
+    "price": 35,
+    "badge": "1x3",
+    "description": "Tailored for Champion League CWL wars. Maximum star denial routing that forces time-fails and sub-optimal hero pathing under heavy defensive fire.",
+    "townHall": "Town Hall 18",
+    "townHallLevel": 18,
+    "productImage": "https://iili.io/q6Fbun9.md.png",
+    "createdBy": "OPICOC Pro Builders",
+    "maxSell": 100,
+    "seasonStartDate": "2026-03-01T00:00:00.000Z",
+    "seasonEndDate": "2026-03-29T00:00:00.000Z",
+    "validityDays": 4,
+    "links": [
+      {
+        "id": "th18-cwl-01",
+        "label": "Layout 1 (CWL Anti-2 Star Core)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH18-CWL-CHAMP-01"
+      }
+    ]
+  },
+  {
+    "id": "69a748e4b78bc58034205eee",
+    "title": "TH 15 Pushing Base For This Season",
+    "price": 20,
+    "badge": "1x1",
+    "description": "Reliable Town Hall 15 defensive fortress tuned for Titan and Legend pushers. Tested against all standard zap smash, s-archer, and hybrid compositions.",
+    "townHall": "Town Hall 15",
+    "townHallLevel": 15,
+    "productImage": "https://iili.io/q6F2QXS.md.png",
+    "createdBy": "OPICOC Pro Builders",
+    "maxSell": 50,
+    "seasonStartDate": "2026-03-01T00:00:00.000Z",
+    "seasonEndDate": "2026-04-15T00:00:00.000Z",
+    "validityDays": 20,
+    "links": [
+      {
+        "id": "th15-push-01",
+        "label": "Layout 1 (Classic Anti-3 Ring)",
+        "url": "https://link.clashofclans.com/en/?action=OpenLayout&id=TH15-PUSH-01"
+      }
+    ]
+  }
+]

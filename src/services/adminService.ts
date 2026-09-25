@@ -338,7 +338,29 @@ export const adminService = {
 
   // --- BASES ---
   getBases(): (BaseProduct & { links: BaseLayoutLink[] })[] {
-    return getStore("opicoc_admin_bases", SEED_BASES);
+    const stored = getStore<(BaseProduct & { links: BaseLayoutLink[] })[]>("opicoc_admin_bases", SEED_BASES);
+    // If local storage has fewer bases than the default authoritative catalog, reset to full seed
+    if (Array.isArray(stored) && stored.length < SEED_BASES.length) {
+      setStore("opicoc_admin_bases", SEED_BASES);
+      return SEED_BASES;
+    }
+    return stored;
+  },
+
+  async syncBasesFromServer(): Promise<(BaseProduct & { links: BaseLayoutLink[] })[]> {
+    try {
+      const res = await fetch("/api/bases?includeLinks=true");
+      if (res.ok) {
+        const data = await res.json();
+        if (data && Array.isArray(data.bases) && data.bases.length > 0) {
+          setStore("opicoc_admin_bases", data.bases);
+          return data.bases;
+        }
+      }
+    } catch {
+      // Fallback to local store
+    }
+    return this.getBases();
   },
 
   saveBase(baseData: Partial<BaseProduct & { links: BaseLayoutLink[] }>): BaseProduct & { links: BaseLayoutLink[] } {
@@ -384,12 +406,28 @@ export const adminService = {
     }
 
     setStore("opicoc_admin_bases", current);
+
+    // Sync with server API
+    if (typeof window !== "undefined") {
+      fetch("/api/bases", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(saved),
+      }).catch((e) => console.warn("Failed to persist base to server API", e));
+    }
+
     return saved;
   },
 
   deleteBase(id: string): void {
     const current = this.getBases().filter((b) => b.id !== id);
     setStore("opicoc_admin_bases", current);
+
+    if (typeof window !== "undefined") {
+      fetch(`/api/bases?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      }).catch((e) => console.warn("Failed to delete base from server API", e));
+    }
   },
 
   // --- CUSTOM REQUESTS ---

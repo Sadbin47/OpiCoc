@@ -25,7 +25,7 @@ import {
 } from "@/types";
 
 export default function AdminDashboardPage() {
-  const [metrics] = React.useState<AdminMetricStats>(() => {
+  const [metrics, setMetrics] = React.useState<AdminMetricStats>(() => {
     try {
       return adminService.getMetrics();
     } catch {
@@ -39,6 +39,14 @@ export default function AdminDashboardPage() {
       };
     }
   });
+
+  React.useEffect(() => {
+    adminService.syncBasesFromServer().then(() => {
+      try {
+        setMetrics(adminService.getMetrics());
+      } catch {}
+    });
+  }, []);
 
   const [recentRequests] = React.useState<CustomBaseRequest[]>(() => {
     try {

@@ -31,6 +31,14 @@ export default function AdminBasesPage() {
   const [editingBase, setEditingBase] = React.useState<(BaseProduct & { links: BaseLayoutLink[] }) | null>(null);
   const [notification, setNotification] = React.useState<string | null>(null);
 
+  React.useEffect(() => {
+    adminService.syncBasesFromServer().then((synced) => {
+      if (synced && synced.length > 0) {
+        setBases(synced);
+      }
+    });
+  }, []);
+
   const handleOpenCreate = () => {
     setEditingBase(null);
     setIsFormOpen(true);

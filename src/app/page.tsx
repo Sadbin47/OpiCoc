@@ -8,6 +8,7 @@ import { VideoSection } from "@/features/home/components/VideoSection";
 import { ReviewSectionStream } from "@/features/home/components/ReviewSectionStream";
 import { ReviewSectionSkeleton } from "@/features/home/components/ReviewSectionSkeleton";
 import { BrandPillarsSection } from "@/features/home/components/BrandPillarsSection";
+import { AdminHomepageFloatingBar } from "@/features/home/components/AdminHomepageFloatingBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteConfig } from "@/config/site";
 
@@ -56,6 +57,9 @@ export default function HomePage() {
 
       {/* 7. Brand Defense Pillars & Supercell Fair Play Disclaimer */}
       <BrandPillarsSection />
+
+      {/* 8. Admin Live Homepage Customization Overlay (Only renders for Admin) */}
+      <AdminHomepageFloatingBar />
     </div>
   );
 }

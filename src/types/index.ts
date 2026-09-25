@@ -165,3 +165,33 @@ export interface AdminMetricStats {
   totalRevenueEst: number;
 }
 
+/**
+ * Dynamic Homepage CMS Configuration (Editable by Admin)
+ */
+export interface HomepageConfig {
+  hero: {
+    announcement: string;
+    headline: string;
+    headlineHighlight: string;
+    subheading: string;
+    bannerImage: string;
+  };
+  video: {
+    tag: string;
+    title: string;
+    description: string;
+    videoUrl: string;
+    posterImage: string;
+    youtubeChannelUrl: string;
+    metaLabel: string;
+  };
+  showdown: {
+    tag: string;
+    title: string;
+    description: string;
+    bannerImage: string;
+    ctaText: string;
+    ctaLink: string;
+  };
+}
+

@@ -5,25 +5,55 @@ import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, Shield, Crosshair, CheckCircle2, Volume2, Sparkles } from "lucide-react";
+import { Play, Shield, Crosshair, CheckCircle2, Volume2, Sparkles, Edit3 } from "lucide-react";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import {
+  useHomepageConfig,
+  formatVideoEmbedUrl,
+} from "@/services/homepageService";
 
 export function VideoSection() {
+  const { isAdmin } = useAdminAuth();
+  const config = useHomepageConfig();
   const [isPlaying, setIsPlaying] = React.useState(false);
 
+  const handleEditSection = () => {
+    window.dispatchEvent(
+      new CustomEvent("opicoc_open_homepage_editor", { detail: { tab: "video" } })
+    );
+  };
+
+  const { isYouTube, embedUrl } = formatVideoEmbedUrl(config.video.videoUrl);
+  const isExternalPoster = config.video.posterImage.startsWith("http");
+
   return (
-    <section id="defense-showcase" className="py-16 sm:py-24 border-b border-[#262B35] bg-[#0B0D11]">
+    <section id="defense-showcase" className="py-16 sm:py-24 border-b border-[#262B35] bg-[#0B0D11] relative group">
+      {/* Admin Section Edit Trigger */}
+      {isAdmin && (
+        <div className="absolute top-4 right-4 z-20">
+          <button
+            onClick={handleEditSection}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#12151B]/90 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/40 text-xs font-semibold backdrop-blur-md shadow-lg transition"
+            title="Edit Video Link & Poster"
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Edit Video</span>
+          </button>
+        </div>
+      )}
+
       <Container size="default">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-amber-500">
             <Crosshair className="w-3.5 h-3.5" />
-            <span>Tactical Analysis</span>
+            <span>{config.video.tag}</span>
           </div>
           <h2 className="font-clash text-3xl sm:text-4xl font-bold tracking-tight text-[#F1F5F9]">
-            Inside an Anti-3 Star Defense
+            {config.video.title}
           </h2>
           <p className="text-sm sm:text-base text-[#94A3B8]">
-            Watch how our tournament-grade base layouts dismantle meta army pushes, trap blimps, and force devastating time-fails.
+            {config.video.description}
           </p>
         </div>
 
@@ -32,22 +62,36 @@ export function VideoSection() {
           <div className="lg:col-span-7">
             <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-[#262B35] bg-[#12151B] shadow-2xl shadow-black/80">
               {isPlaying ? (
-                <video
-                  src="https://www.opicoc.cc/assets/video-cGgfOX-2.mp4"
-                  controls
-                  autoPlay
-                  playsInline
-                  className="w-full h-full object-cover"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                isYouTube ? (
+                  <iframe
+                    src={embedUrl}
+                    title={config.video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                ) : (
+                  <video
+                    src={embedUrl || "https://www.opicoc.cc/assets/video-cGgfOX-2.mp4"}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                )
               ) : (
-                <div className="relative w-full h-full group cursor-pointer" onClick={() => setIsPlaying(true)}>
+                <div
+                  className="relative w-full h-full group cursor-pointer"
+                  onClick={() => setIsPlaying(true)}
+                >
                   <Image
-                    src="/assets/video-poster.webp"
+                    src={config.video.posterImage || "/assets/video-poster.webp"}
                     alt="Clash of Clans Defensive Replay Breakdown"
                     fill
                     sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized={isExternalPoster}
                     className="object-cover object-center filter brightness-90 contrast-110 group-hover:scale-102 transition-transform duration-500"
                   />
                   {/* Subtle Gradient Overlay */}
@@ -77,11 +121,11 @@ export function VideoSection() {
                   <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 text-[11px] sm:text-xs text-[#CBD5E1] bg-black/70 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/10">
                     <span className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                       <Shield className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span className="truncate">TH18 Hard Mode Vs Super Archer & Root Rider</span>
+                      <span className="truncate">{config.video.metaLabel}</span>
                     </span>
                     <span className="font-mono text-[#94A3B8] hidden sm:flex items-center gap-1 shrink-0">
                       <Volume2 className="w-3.5 h-3.5" />
-                      Click to Play (Lazy Loaded)
+                      Click to Play
                     </span>
                   </div>
                 </div>
@@ -135,7 +179,12 @@ export function VideoSection() {
 
             <div className="pt-2">
               <Button asChild variant="outline" size="sm" className="font-mono text-xs">
-                <a href="https://www.youtube.com/@Opi333coc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <a
+                  href={config.video.youtubeChannelUrl || "https://www.youtube.com/@Opi333coc"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   Watch More Replays on YouTube
                 </a>

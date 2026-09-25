@@ -232,21 +232,26 @@ export function BaseForm({ initialBase, isOpen, onClose, onSave }: BaseFormProps
 
           {/* Image URL & Thumbnail Preview */}
           <div className="space-y-1.5">
-            <label htmlFor="base-image" className="text-xs font-medium text-[#CBD5E1]">
-              Product Screenshot Image URL *
-            </label>
+            <div className="flex items-center justify-between">
+              <label htmlFor="base-image" className="text-xs font-medium text-[#CBD5E1]">
+                Product Screenshot Image URL *
+              </label>
+              <span className="text-[11px] text-[#64748B]">
+                Supports Gifyu, iili.io, and CDN image links
+              </span>
+            </div>
             <div className="flex items-center gap-3">
               <input
                 id="base-image"
                 type="text"
                 value={productImage}
                 onChange={(e) => setProductImage(e.target.value)}
-                placeholder="https://iili.io/..."
+                placeholder="https://s15.gifyu.com/images/bue9g.jpg or https://iili.io/..."
                 className="flex-1 px-3.5 py-2.5 rounded-lg border border-[#262B35] bg-[#0F1217] text-sm text-[#F1F5F9] placeholder-[#64748B] focus:border-amber-500 outline-none transition"
               />
-              <div className="relative w-14 h-10 rounded border border-[#262B35] overflow-hidden bg-black shrink-0">
+              <div className="relative w-16 h-11 rounded border border-[#262B35] overflow-hidden bg-black shrink-0">
                 <Image
-                  src={productImage || "https://iili.io/q6Fiihu.md.png"}
+                  src={productImage.startsWith("http") ? productImage : "https://iili.io/q6Fiihu.md.png"}
                   alt="Preview"
                   fill
                   className="object-cover"
@@ -254,6 +259,9 @@ export function BaseForm({ initialBase, isOpen, onClose, onSave }: BaseFormProps
                 />
               </div>
             </div>
+            <p className="text-[11px] text-[#64748B]">
+              Direct image link format: <code className="text-amber-400">https://s15.gifyu.com/images/bue9g.jpg</code>
+            </p>
             {errors.productImage && <p className="text-[11px] text-red-400">{errors.productImage}</p>}
           </div>
 

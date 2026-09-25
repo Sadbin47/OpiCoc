@@ -1,3 +1,6 @@
+"use client";
+
+import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
@@ -10,19 +13,34 @@ import {
   Trophy,
   CheckCircle2,
   PlayCircle,
+  Edit3,
 } from "lucide-react";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { useHomepageConfig } from "@/services/homepageService";
 
 export function HeroSection() {
+  const { isAdmin } = useAdminAuth();
+  const config = useHomepageConfig();
+
+  const handleEditSection = () => {
+    window.dispatchEvent(
+      new CustomEvent("opicoc_open_homepage_editor", { detail: { tab: "hero" } })
+    );
+  };
+
+  const isExternalImage = config.hero.bannerImage.startsWith("http");
+
   return (
-    <section className="relative overflow-hidden border-b border-[#262B35] bg-[#0B0D11] pt-12 pb-20 lg:pt-20 lg:pb-28">
+    <section className="relative overflow-hidden border-b border-[#262B35] bg-[#0B0D11] pt-12 pb-20 lg:pt-20 lg:pb-28 group">
       {/* Background Graphic with Vignette */}
       <div className="absolute inset-0 z-0 select-none pointer-events-none">
         <Image
-          src="/assets/hero-banner-1.jpg"
+          src={config.hero.bannerImage || "/assets/hero-banner-1.jpg"}
           alt="Clash of Clans Pro Base Defense Arena"
           fill
           priority
           sizes="100vw"
+          unoptimized={isExternalImage}
           className="object-cover object-center opacity-25 filter brightness-75 contrast-125"
         />
         {/* Radial & Linear Dark Gradients for contrast and readable typography */}
@@ -30,28 +48,40 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0B0D11_85%)]" />
       </div>
 
+      {/* Admin In-Place Section Edit Trigger */}
+      {isAdmin && (
+        <div className="absolute top-4 right-4 z-20">
+          <button
+            onClick={handleEditSection}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#12151B]/90 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/40 text-xs font-semibold backdrop-blur-md shadow-lg transition"
+            title="Edit Hero Banners & Headline"
+          >
+            <Edit3 className="w-3.5 h-3.5" />
+            <span>Edit Hero</span>
+          </button>
+        </div>
+      )}
+
       <Container size="default" className="relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-6 sm:space-y-8">
           {/* Tactical Season Announcement Pill */}
           <div className="inline-flex max-w-full items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold bg-[#12151B]/90 text-amber-400 border border-amber-500/30 shadow-sm backdrop-blur-sm">
             <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
             <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="truncate">2026 CWL & Legend Season Meta Updated</span>
+            <span className="truncate">{config.hero.announcement}</span>
           </div>
 
           {/* Master Headline */}
           <h1 className="font-clash text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#F1F5F9] leading-[1.08]">
-            Engineered for <br className="hidden sm:inline" />
+            {config.hero.headline} <br className="hidden sm:inline" />
             <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent drop-shadow-sm">
-              Unbeatable Defense
+              {config.hero.headlineHighlight}
             </span>
           </h1>
 
           {/* Subheading & Value Proposition */}
           <p className="text-sm sm:text-base md:text-xl text-[#94A3B8] max-w-2xl leading-relaxed">
-            Stop surrendering 3-stars in CWL and Legend League. Discover tournament-grade
-            Town Hall 15 to 18 base layouts handcrafted by elite esports builders. Tested
-            against the hardest meta attacks.
+            {config.hero.subheading}
           </p>
 
           {/* Call-to-Actions */}
