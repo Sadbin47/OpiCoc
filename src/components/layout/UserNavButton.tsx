@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { UserProfile } from "@/types";
-import { User } from "lucide-react";
+import { User, ShieldCheck } from "lucide-react";
 
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
@@ -37,6 +37,27 @@ export function UserNavButton() {
   }, [sessionStr]);
 
   if (user) {
+    if (user.role === "admin") {
+      return (
+        <div className="hidden sm:inline-flex items-center gap-2">
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+            Admin Panel
+          </Link>
+          <Link
+            href="/profile"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-[#1A1E26] text-[#F1F5F9] border border-[#262B35] hover:bg-[#262B35] hover:border-[#3B4252] transition outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+          >
+            <User className="w-3.5 h-3.5 text-amber-400" />
+            <span className="truncate max-w-[100px]">{user.firstName}</span>
+          </Link>
+        </div>
+      );
+    }
+
     return (
       <Link
         href="/profile"

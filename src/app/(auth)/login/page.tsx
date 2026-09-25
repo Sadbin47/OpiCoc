@@ -39,8 +39,14 @@ function LoginForm() {
     try {
       const res = await loginUser(email, password);
       if (res.success) {
-        // Successful login: redirect to intended destination or home
-        router.push(redirectTo);
+        // Direct to requested page, or if default, route admin to /admin and user to home
+        const destination =
+          redirectTo && redirectTo !== "/"
+            ? redirectTo
+            : res.user?.role === "admin"
+            ? "/admin"
+            : "/";
+        router.push(destination);
         router.refresh();
       } else {
         // If unverified, guide to verify-otp
@@ -52,6 +58,34 @@ function LoginForm() {
       }
     } catch {
       setError("An unexpected error occurred during login. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDemoLogin = async (role: "admin" | "user") => {
+    setError(null);
+    const account = DEMO_ACCOUNTS[role];
+    setEmail(account.email);
+    setPassword(account.password);
+    setIsSubmitting(true);
+
+    try {
+      const res = await loginUser(account.email, account.password);
+      if (res.success) {
+        const destination =
+          redirectTo && redirectTo !== "/"
+            ? redirectTo
+            : role === "admin"
+            ? "/admin"
+            : "/profile";
+        router.push(destination);
+        router.refresh();
+      } else {
+        setError(res.message || "Demo login failed");
+      }
+    } catch {
+      setError("An unexpected error occurred during demo login.");
     } finally {
       setIsSubmitting(false);
     }
@@ -74,30 +108,24 @@ function LoginForm() {
       )}
 
       {/* Demo Credentials Quick Fill */}
-      <div className="flex items-center justify-between p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1]">
-        <span className="font-semibold text-amber-400">Demo Fill:</span>
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1] gap-2">
+        <span className="font-semibold text-amber-400">1-Click Demo Login:</span>
+        <div className="flex gap-2 w-full sm:w-auto">
           <button
             type="button"
-            onClick={() => {
-              setEmail(DEMO_ACCOUNTS.admin.email);
-              setPassword(DEMO_ACCOUNTS.admin.password);
-              setError(null);
-            }}
-            className="px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[11px] font-medium transition-colors border border-amber-500/30"
+            onClick={() => handleDemoLogin("admin")}
+            disabled={isSubmitting}
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-xs font-semibold transition-colors border border-amber-500/40 cursor-pointer disabled:opacity-50"
           >
-            Admin (Chief)
+            🛡️ Admin → /admin
           </button>
           <button
             type="button"
-            onClick={() => {
-              setEmail(DEMO_ACCOUNTS.user.email);
-              setPassword(DEMO_ACCOUNTS.user.password);
-              setError(null);
-            }}
-            className="px-2.5 py-1 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-[11px] font-medium transition-colors border border-slate-700"
+            onClick={() => handleDemoLogin("user")}
+            disabled={isSubmitting}
+            className="flex-1 sm:flex-none px-3 py-1.5 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-xs font-semibold transition-colors border border-slate-700 cursor-pointer disabled:opacity-50"
           >
-            User (Member)
+            👤 User → /profile
           </button>
         </div>
       </div>
