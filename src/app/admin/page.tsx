@@ -84,7 +84,7 @@ export default function AdminDashboardPage() {
         <div className="space-y-2 relative z-10">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono font-medium">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>OPICOC V2 Master Administration</span>
+            <span>OPICOC Master Administration</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold font-clash text-[#F1F5F9] tracking-tight">
             Welcome back, Chief Architect
@@ -352,7 +352,7 @@ export default function AdminDashboardPage() {
       <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-6 space-y-4">
         <h3 className="text-sm font-semibold text-[#F1F5F9] flex items-center gap-2">
           <Shield className="w-4 h-4 text-emerald-400" />
-          <span>OPICOC V2 Architecture Verification</span>
+          <span>Platform Architecture Verification</span>
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div className="p-3 rounded-lg border border-[#1E232B] bg-[#161A22] space-y-1">

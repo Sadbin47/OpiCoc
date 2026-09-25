@@ -22,11 +22,8 @@ export function Header() {
               className="rounded object-contain transition-transform group-hover:scale-105"
               priority
             />
-            <span className="font-clash text-2xl font-bold tracking-tight text-[#F1F5F9] flex items-center gap-1">
+            <span className="font-clash text-2xl font-bold tracking-tight text-[#F1F5F9]">
               OPICOC
-              <span className="text-[11px] font-sans font-bold uppercase tracking-widest text-amber-500 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded">
-                V2
-              </span>
             </span>
           </Link>
         </div>

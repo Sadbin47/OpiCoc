@@ -3,7 +3,7 @@ import { z } from "zod";
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
-  NEXT_PUBLIC_APP_NAME: z.string().default("OPICOC V2"),
+  NEXT_PUBLIC_APP_NAME: z.string().default("OPICOC"),
 });
 
 export const env = envSchema.parse({

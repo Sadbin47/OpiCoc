@@ -2,7 +2,7 @@
   "name": "opicoc-v2",
   "version": "0.1.0",
   "private": true,
-  "description": "OPICOC V2 - High Performance Clash of Clans Base Layouts Platform",
+  "description": "OPICOC - High Performance Clash of Clans Base Layouts Platform",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

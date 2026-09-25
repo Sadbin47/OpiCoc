@@ -1,5 +1,5 @@
 /**
- * OPICOC V2 Transactional Email Service
+ * OPICOC Transactional Email Service
  * Pluggable architecture supporting Resend, SendGrid, Postmark, and safe Local Fallback.
  */
 

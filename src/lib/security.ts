@@ -1,5 +1,5 @@
 /**
- * OPICOC V2 Security Architecture & Hardening Utilities
+ * OPICOC Security Architecture & Hardening Utilities
  * Provides Content Security Policy (CSP) builders, HTTP security headers, and input sanitization.
  */
 

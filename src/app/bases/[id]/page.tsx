@@ -121,7 +121,7 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Base Catalogue",
+        name: "All Bases",
         item: `${baseUrl}/all-products`,
       },
       {
@@ -166,7 +166,7 @@ export default async function BaseDetailPage({ params }: BaseDetailPageProps) {
           <Button asChild variant="ghost" size="sm" className="text-xs text-[#94A3B8] hover:text-[#F1F5F9] p-0 h-auto">
             <Link href="/all-products" className="flex items-center gap-1.5">
               <ArrowLeft className="w-3.5 h-3.5" />
-              Back to Base Catalogue
+              Back to All Bases
             </Link>
           </Button>
         </div>

@@ -1,5 +1,5 @@
 /**
- * OPICOC V2 Incident Alert Dispatcher
+ * OPICOC Incident Alert Dispatcher
  * Sends formatted alert webhooks to Discord and Slack for production observability.
  */
 
@@ -54,7 +54,7 @@ export async function dispatchAlertWebhook(alert: AlertPayload): Promise<boolean
                   inline: true,
                 }))
               : [],
-            footer: { text: "OPICOC V2 Observability & Uptime Monitor" },
+            footer: { text: "OPICOC Observability & Uptime Monitor" },
           },
         ],
       };

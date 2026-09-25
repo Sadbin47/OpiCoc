@@ -8,7 +8,7 @@ import { loginUser, DEMO_ACCOUNTS } from "@/services/authService";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff, Lock, Mail, AlertCircle, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, AlertCircle, ArrowRight, Shield, User } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -107,25 +107,27 @@ function LoginForm() {
         </div>
       )}
 
-      {/* Demo Credentials Quick Fill */}
+      {/* Quick Account Access Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-[#CBD5E1] gap-2">
-        <span className="font-semibold text-amber-400">1-Click Demo Login:</span>
+        <span className="font-semibold text-amber-400">Quick Account Access:</span>
         <div className="flex gap-2 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => handleDemoLogin("admin")}
             disabled={isSubmitting}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-xs font-semibold transition-colors border border-amber-500/40 cursor-pointer disabled:opacity-50"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-xs font-semibold transition-colors border border-amber-500/40 cursor-pointer disabled:opacity-50"
           >
-            🛡️ Admin → /admin
+            <Shield className="w-3.5 h-3.5 text-amber-400" />
+            <span>Admin &rarr; /admin</span>
           </button>
           <button
             type="button"
             onClick={() => handleDemoLogin("user")}
             disabled={isSubmitting}
-            className="flex-1 sm:flex-none px-3 py-1.5 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-xs font-semibold transition-colors border border-slate-700 cursor-pointer disabled:opacity-50"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded bg-[#1A1E26] hover:bg-[#262B35] text-slate-300 font-mono text-xs font-semibold transition-colors border border-slate-700 cursor-pointer disabled:opacity-50"
           >
-            👤 User → /profile
+            <User className="w-3.5 h-3.5 text-slate-400" />
+            <span>User &rarr; /profile</span>
           </button>
         </div>
       </div>

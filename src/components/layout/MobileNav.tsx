@@ -44,7 +44,7 @@ export function MobileNav() {
               className="rounded"
             />
             <span className="font-clash text-xl font-bold tracking-tight text-[#F1F5F9]">
-              OPICOC <span className="text-amber-500 text-xs font-sans">V2</span>
+              OPICOC
             </span>
           </SheetTitle>
         </SheetHeader>

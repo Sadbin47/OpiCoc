@@ -40,7 +40,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
   const pathname = usePathname();
   const current = ROUTE_TITLES[pathname] || {
     title: "Admin Portal",
-    subtitle: "OPICOC V2 Administrative Operations",
+    subtitle: "OPICOC Administrative Operations",
   };
 
   return (
@@ -72,7 +72,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
         {/* System Health Indicator */}
         <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full border border-[#262B35] bg-[#14181F] text-[11px] text-[#94A3B8]">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-          <span>V2 Systems Online</span>
+          <span>Systems Online</span>
         </div>
 
         {/* Storefront Link */}

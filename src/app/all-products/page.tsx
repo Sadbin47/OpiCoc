@@ -11,7 +11,7 @@ import { PageTransition } from "@/components/motion/PageTransition";
 import { Shield, Sparkles, AlertCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Clash of Clans Base Layouts Catalogue",
+  title: "Clash of Clans Base Layouts",
   description:
     "Explore tournament-grade Town Hall 15 to 18 Clash of Clans base packs. Handcrafted by elite builders for CWL, Legend League, and Anti-3 Star war defense.",
 };
@@ -75,7 +75,7 @@ export default async function AllProductsPage({ searchParams }: AllProductsPageP
             <span>Defensive Formations</span>
           </div>
           <h1 className="font-clash text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#F1F5F9]">
-            Base Layouts Catalogue
+            Base Layouts
           </h1>
           <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed">
             Every base layout has been battle-tested against current top-tier attack metas in

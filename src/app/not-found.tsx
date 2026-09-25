@@ -19,7 +19,7 @@ export default function NotFound() {
             Sector Not Found
           </h1>
           <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed max-w-md mx-auto">
-            The layout, base tier, or page coordinates you requested do not exist or have been relocated in the V2 deployment.
+            The layout, base tier, or page coordinates you requested do not exist or have been moved.
           </p>
         </div>
 

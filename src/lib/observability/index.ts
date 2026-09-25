@@ -1,5 +1,5 @@
 /**
- * OPICOC V2 Centralized Observability & Error Tracking Engine
+ * OPICOC Centralized Observability & Error Tracking Engine
  * Provides structured error capturing, performance telemetry, and alerting.
  */
 

@@ -43,7 +43,7 @@ export function PurchasedBasesList({ purchases }: PurchasedBasesListProps) {
         <div className="pt-2">
           <Button asChild size="sm" className="font-semibold gap-2 shadow-md">
             <Link href="/all-products">
-              Explore Base Catalogue
+              Explore All Bases
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>

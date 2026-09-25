@@ -22,7 +22,7 @@ export function Footer() {
                 className="rounded"
               />
               <span className="font-clash text-2xl font-bold tracking-tight text-[#F1F5F9]">
-                OPICOC <span className="text-amber-500 text-xs font-sans">V2</span>
+                OPICOC
               </span>
             </Link>
 
@@ -102,11 +102,6 @@ export function Footer() {
                   Contact Support
                 </Link>
               </li>
-              <li>
-                <Link href="/design-system" className="hover:text-amber-400 transition font-mono text-xs text-[#64748B]">
-                  Design System Preview
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -163,7 +158,7 @@ export function Footer() {
         {/* Bottom Disclaimer & Copyright */}
         <div className="pt-10 mt-10 border-t border-[#1E232B] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
           <p>
-            © {new Date().getFullYear()} OPICOC V2. All rights reserved. This site is not affiliated with, endorsed, sponsored, or specifically approved by Supercell.
+            © {new Date().getFullYear()} OPICOC. All rights reserved. This site is not affiliated with, endorsed, sponsored, or specifically approved by Supercell.
           </p>
           <div className="flex items-center gap-4 text-[#94A3B8]">
             <Link href="/terms-conditions" className="hover:text-[#F1F5F9] hover:underline">
