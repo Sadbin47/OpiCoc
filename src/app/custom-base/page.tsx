@@ -286,7 +286,7 @@ export default function CustomBasePage() {
                   <div>
                     <h4 className="font-semibold text-[#F1F5F9]">1-of-1 Confidentiality</h4>
                     <p className="mt-0.5 leading-relaxed">
-                      Your custom base is completely exclusive. It will never be uploaded to our public catalogue, given to other clans, or leaked publicly.
+                      Your custom base is completely exclusive. It will never be uploaded to our public store, given to other clans, or leaked publicly.
                     </p>
                   </div>
                 </div>

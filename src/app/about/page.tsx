@@ -123,7 +123,7 @@ export default function AboutPage() {
                 <span>Hard-Mode Scrimmage Verification</span>
               </div>
               <p className="text-xs text-[#94A3B8] leading-relaxed">
-                Before any base is approved for catalogue release, it undergoes friendly war testing
+                Before any base is approved for public release, it undergoes friendly war testing
                 against champion attackers executing the strongest meta army variants of the season.
               </p>
             </div>

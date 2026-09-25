@@ -209,7 +209,7 @@ export default async function TownHallPage({ params }: TownHallPageProps) {
               Fresh TH{level} Layouts in Testing
             </h3>
             <p className="text-xs sm:text-sm text-[#94A3B8] max-w-md mx-auto">
-              Our builders are currently testing new TH{level} layouts against the latest balance update. Check out our catalogue or request a custom base.
+              Our builders are currently testing new TH{level} layouts against the latest balance update. Check out our base layouts or request a custom base.
             </p>
             <div className="pt-2 flex justify-center gap-3">
               <Button asChild size="sm">

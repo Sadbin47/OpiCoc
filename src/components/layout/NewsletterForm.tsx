@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 
 export function NewsletterForm() {
   const [email, setEmail] = React.useState("");
@@ -24,8 +24,9 @@ export function NewsletterForm() {
         Stay Updated on CWL Metas
       </label>
       {submitted ? (
-        <p className="text-xs text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-md">
-          ✓ Thank you for subscribing to OPICOC meta alerts!
+        <p className="text-xs text-emerald-400 font-medium bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-md flex items-center gap-1.5">
+          <CheckCircle className="w-3.5 h-3.5 shrink-0" />
+          Thank you for subscribing to OPICOC meta alerts!
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
