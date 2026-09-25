@@ -33,10 +33,21 @@ export default function AdminBasesPage() {
 
   React.useEffect(() => {
     adminService.syncBasesFromServer().then((synced) => {
-      if (synced && synced.length > 0) {
+      if (synced && Array.isArray(synced)) {
         setBases(synced);
       }
     });
+
+    const handleUpdate = () => {
+      setBases(adminService.getBases());
+    };
+
+    window.addEventListener("opicoc_bases_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("opicoc_bases_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const handleOpenCreate = () => {

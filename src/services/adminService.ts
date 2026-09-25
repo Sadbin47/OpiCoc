@@ -337,14 +337,20 @@ export const adminService = {
   },
 
   // --- BASES ---
+  // --- BASES ---
   getBases(): (BaseProduct & { links: BaseLayoutLink[] })[] {
-    const stored = getStore<(BaseProduct & { links: BaseLayoutLink[] })[]>("opicoc_admin_bases", SEED_BASES);
-    // If local storage has fewer bases than the default authoritative catalog, reset to full seed
-    if (Array.isArray(stored) && stored.length < SEED_BASES.length) {
+    if (typeof window === "undefined") return SEED_BASES;
+    const raw = window.localStorage.getItem("opicoc_admin_bases");
+    if (raw === null) {
       setStore("opicoc_admin_bases", SEED_BASES);
       return SEED_BASES;
     }
-    return stored;
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : SEED_BASES;
+    } catch {
+      return SEED_BASES;
+    }
   },
 
   async syncBasesFromServer(): Promise<(BaseProduct & { links: BaseLayoutLink[] })[]> {
@@ -352,7 +358,7 @@ export const adminService = {
       const res = await fetch("/api/bases?includeLinks=true");
       if (res.ok) {
         const data = await res.json();
-        if (data && Array.isArray(data.bases) && data.bases.length > 0) {
+        if (data && Array.isArray(data.bases)) {
           setStore("opicoc_admin_bases", data.bases);
           return data.bases;
         }
@@ -407,8 +413,13 @@ export const adminService = {
 
     setStore("opicoc_admin_bases", current);
 
-    // Sync with server API
+    // Broadcast immediate update event for all components and browser tabs
     if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("opicoc_bases_updated_at", Date.now().toString());
+        window.dispatchEvent(new Event("opicoc_bases_updated"));
+      } catch {}
+
       fetch("/api/bases", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -423,7 +434,13 @@ export const adminService = {
     const current = this.getBases().filter((b) => b.id !== id);
     setStore("opicoc_admin_bases", current);
 
+    // Broadcast immediate update event for all components and browser tabs
     if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("opicoc_bases_updated_at", Date.now().toString());
+        window.dispatchEvent(new Event("opicoc_bases_updated"));
+      } catch {}
+
       fetch(`/api/bases?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
       }).catch((e) => console.warn("Failed to delete base from server API", e));
