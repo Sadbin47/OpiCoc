@@ -18,11 +18,11 @@ export function SiteShell({ children, className }: SiteShellProps) {
 
   if (isAdmin) {
     return (
-      <div className="min-h-screen bg-[#090B0E] text-[#F1F5F9] selection:bg-amber-500 selection:text-black">
+      <div className="h-screen h-dvh bg-[#090B0E] text-[#F1F5F9] selection:bg-amber-500 selection:text-black overflow-hidden flex flex-col">
         <SkipToContent />
-        <main id="main-content" className={cn("min-h-screen", className)}>
+        <div id="main-content" className={cn("flex-1 min-h-0 w-full overflow-hidden", className)}>
           {children}
-        </main>
+        </div>
       </div>
     );
   }

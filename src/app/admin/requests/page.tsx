@@ -244,7 +244,7 @@ export default function AdminRequestsPage() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-2xl my-8 rounded-2xl border border-[#262B35] bg-[#12151B] p-6 sm:p-8 shadow-2xl space-y-6">
+          <div className="relative w-full max-w-2xl my-6 rounded-2xl border border-[#262B35] bg-[#12151B] p-5 sm:p-6 shadow-2xl space-y-5 max-h-[90dvh] overflow-y-auto">
             <div className="flex items-center justify-between pb-4 border-b border-[#1E232B]">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400">

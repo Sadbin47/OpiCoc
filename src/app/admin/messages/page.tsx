@@ -153,7 +153,7 @@ export default function AdminMessagesPage() {
       {/* Split Pane View */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Messages List (5 columns) */}
-        <div className="lg:col-span-5 rounded-xl border border-[#1E232B] bg-[#12151B] overflow-hidden shadow-lg flex flex-col max-h-[700px]">
+        <div className="lg:col-span-5 rounded-xl border border-[#1E232B] bg-[#12151B] overflow-hidden shadow-lg flex flex-col max-h-[calc(100dvh-220px)] min-h-[380px]">
           <div className="p-3 border-b border-[#1E232B] bg-[#0F1217] text-xs font-semibold text-[#94A3B8] flex items-center justify-between">
             <span>Conversations</span>
             <span className="font-mono text-[11px]">{filteredMessages.length} items</span>
@@ -215,7 +215,7 @@ export default function AdminMessagesPage() {
         </div>
 
         {/* Message Detail & Reply Composer (7 columns) */}
-        <div className="lg:col-span-7 rounded-xl border border-[#1E232B] bg-[#12151B] p-6 shadow-lg flex flex-col justify-between min-h-[500px]">
+        <div className="lg:col-span-7 rounded-xl border border-[#1E232B] bg-[#12151B] p-5 shadow-lg flex flex-col justify-between max-h-[calc(100dvh-220px)] min-h-[380px] overflow-y-auto">
           {selectedMessage ? (
             <div className="space-y-6 flex-1 flex flex-col">
               {/* Header Info */}

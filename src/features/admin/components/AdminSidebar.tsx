@@ -116,26 +116,26 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-50 w-72 flex flex-col bg-[#0F1217] border-r border-[#1E232B] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto",
+          "fixed top-0 bottom-0 left-0 z-50 w-64 h-full flex flex-col bg-[#0F1217] border-r border-[#1E232B] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:relative lg:z-auto shrink-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
         aria-label="Admin Navigation"
       >
         {/* Brand Header */}
-        <div className="h-16 px-6 flex items-center justify-between border-b border-[#1E232B]">
+        <div className="h-14 px-4 flex items-center justify-between border-b border-[#1E232B] shrink-0">
           <Link href="/admin" className="flex items-center gap-2.5 group">
             <Image
               src="/assets/logo.png"
               alt="OPICOC Logo"
-              width={34}
-              height={34}
+              width={28}
+              height={28}
               className="rounded transition-transform group-hover:scale-105"
             />
             <div className="flex flex-col">
-              <span className="font-clash text-lg font-bold tracking-tight text-[#F1F5F9] leading-none">
+              <span className="font-clash text-base font-bold tracking-tight text-[#F1F5F9] leading-none">
                 OPICOC
               </span>
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-500 font-semibold mt-0.5">
+              <span className="text-[9px] font-mono uppercase tracking-wider text-amber-500 font-semibold mt-0.5">
                 Admin Command
               </span>
             </div>
@@ -144,31 +144,31 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           {/* Mobile Close Button */}
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E232B] lg:hidden"
+            className="p-1.5 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E232B] lg:hidden cursor-pointer"
             aria-label="Close sidebar"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Quick Storefront Link */}
-        <div className="px-4 pt-4 pb-2">
+        <div className="px-3 pt-3 pb-1 shrink-0">
           <Link
             href="/"
             target="_blank"
-            className="flex items-center justify-between px-3 py-2 text-xs rounded-lg border border-[#262B35] bg-[#14181F] text-[#94A3B8] hover:text-amber-400 hover:border-amber-500/30 transition group"
+            className="flex items-center justify-between px-2.5 py-1.5 text-xs rounded-lg border border-[#262B35] bg-[#14181F] text-[#94A3B8] hover:text-amber-400 hover:border-amber-500/30 transition group"
           >
             <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Live Storefront
             </span>
-            <ExternalLink className="w-3.5 h-3.5 text-[#64748B] group-hover:text-amber-400 transition-colors" />
+            <ExternalLink className="w-3 h-3 text-[#64748B] group-hover:text-amber-400 transition-colors" />
           </Link>
         </div>
 
-        {/* Navigation Items */}
-        <nav className="flex-1 px-4 py-3 space-y-1 overflow-y-auto">
-          <div className="px-3 pb-2 text-[10px] font-mono uppercase tracking-wider text-[#64748B] font-semibold">
+        {/* Navigation Items (Scrolls independently if needed) */}
+        <nav className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto min-h-0">
+          <div className="px-2.5 pb-1.5 text-[9px] font-mono uppercase tracking-wider text-[#64748B] font-semibold">
             Management
           </div>
 
@@ -184,28 +184,28 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors group",
+                  "flex items-center justify-between px-2.5 py-2 text-xs font-medium rounded-lg transition-colors group",
                   isActive
                     ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
                     : "text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#161A22]"
                 )}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <Icon
                     className={cn(
-                      "w-4 h-4 transition-colors",
+                      "w-4 h-4 transition-colors shrink-0",
                       isActive
                         ? "text-amber-400"
                         : "text-[#64748B] group-hover:text-[#CBD5E1]"
                     )}
                   />
-                  <span>{item.label}</span>
+                  <span className="truncate">{item.label}</span>
                 </div>
 
                 {item.badge !== null && (
                   <span
                     className={cn(
-                      "px-2 py-0.5 text-xs font-mono font-semibold rounded-full",
+                      "px-1.5 py-0.2 text-[10px] font-mono font-semibold rounded-full shrink-0",
                       item.badgeColor || "bg-[#262B35] text-[#CBD5E1]"
                     )}
                   >
@@ -217,30 +217,30 @@ export function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           })}
         </nav>
 
-        {/* Footer Admin Profile & Logout */}
-        <div className="p-4 border-t border-[#1E232B] bg-[#0C0E12]">
-          <div className="flex items-center justify-between mb-3 px-1">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-xs font-bold text-black shadow-sm shrink-0">
+        {/* Footer Admin Profile & Always-Visible Logout */}
+        <div className="p-3 border-t border-[#1E232B] bg-[#0C0E12] shrink-0 mt-auto">
+          <div className="flex items-center justify-between mb-2.5 px-0.5">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-[10px] font-bold text-black shadow-sm shrink-0">
                 {currentUser.name.slice(0, 2).toUpperCase()}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-medium text-[#F1F5F9] truncate">
+                <p className="text-xs font-medium text-[#F1F5F9] truncate leading-tight">
                   {currentUser.name}
                 </p>
-                <p className="text-[10px] text-[#64748B] truncate">
+                <p className="text-[10px] text-[#64748B] truncate leading-tight">
                   {currentUser.email}
                 </p>
               </div>
             </div>
-            <span className="px-1.5 py-0.5 text-[9px] font-mono uppercase font-bold rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0">
+            <span className="px-1.5 py-0.5 text-[8px] font-mono uppercase font-bold rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0 ml-1">
               Admin
             </span>
           </div>
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium rounded-lg border border-[#262B35] bg-[#14181F] text-[#94A3B8] hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/5 transition"
+            className="w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg border border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:border-red-500/30 transition cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out Admin</span>

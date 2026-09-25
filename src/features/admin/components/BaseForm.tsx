@@ -110,7 +110,7 @@ export function BaseForm({ initialBase, isOpen, onClose, onSave }: BaseFormProps
       aria-modal="true"
       aria-labelledby="base-modal-title"
     >
-      <div className="relative w-full max-w-3xl my-8 rounded-2xl border border-[#262B35] bg-[#12151B] p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-3xl my-6 rounded-2xl border border-[#262B35] bg-[#12151B] p-5 sm:p-6 shadow-2xl space-y-5 max-h-[90dvh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[#1E232B]">
           <div className="flex items-center gap-3">

@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, ArrowUpRight, ShieldCheck } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, ArrowUpRight, ShieldCheck, LogOut } from "lucide-react";
+import { logoutUser } from "@/services/authService";
 
 interface AdminHeaderProps {
   onOpenMobileMenu: () => void;
@@ -12,7 +13,7 @@ interface AdminHeaderProps {
 const ROUTE_TITLES: Record<string, { title: string; subtitle: string }> = {
   "/admin": {
     title: "Command Center",
-    subtitle: "High-level overview of catalogue performance, inquiries, and pending orders.",
+    subtitle: "High-level overview of base performance, inquiries, and pending orders.",
   },
   "/admin/bases": {
     title: "Base Layout Management",
@@ -38,18 +39,25 @@ const ROUTE_TITLES: Record<string, { title: string; subtitle: string }> = {
 
 export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
   const current = ROUTE_TITLES[pathname] || {
     title: "Admin Portal",
     subtitle: "OPICOC Administrative Operations",
   };
 
+  const handleLogout = () => {
+    logoutUser();
+    router.push("/login");
+  };
+
   return (
-    <header className="h-16 px-4 sm:px-6 lg:px-8 border-b border-[#1E232B] bg-[#0C0E12] flex items-center justify-between sticky top-0 z-30">
+    <header className="h-14 px-4 sm:px-6 lg:px-8 border-b border-[#1E232B] bg-[#0C0E12] flex items-center justify-between sticky top-0 z-30 shrink-0">
       <div className="flex items-center gap-3">
         {/* Mobile Sidebar Hamburger */}
         <button
           onClick={onOpenMobileMenu}
-          className="p-2 -ml-2 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E232B] lg:hidden"
+          className="p-2 -ml-2 rounded-lg text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-[#1E232B] lg:hidden cursor-pointer"
           aria-label="Open sidebar menu"
         >
           <Menu className="w-5 h-5" />
@@ -68,7 +76,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {/* System Health Indicator */}
         <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full border border-[#262B35] bg-[#14181F] text-[11px] text-[#94A3B8]">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -84,6 +92,16 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
           <span>Storefront</span>
           <ArrowUpRight className="w-3.5 h-3.5" />
         </Link>
+
+        {/* Quick Header Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-500/20 bg-red-500/10 text-xs font-medium text-red-400 hover:bg-red-500/20 hover:border-red-500/40 transition cursor-pointer"
+          title="Sign out of admin session"
+        >
+          <LogOut className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
       </div>
     </header>
   );

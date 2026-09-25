@@ -12,7 +12,7 @@ export default function AdminLayout({
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-[#090B0E] flex">
+    <div className="h-screen h-dvh bg-[#090B0E] flex overflow-hidden w-full">
       {/* Admin Sidebar */}
       <AdminSidebar
         isOpen={isMobileOpen}
@@ -20,10 +20,10 @@ export default function AdminLayout({
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         <AdminHeader onOpenMobileMenu={() => setIsMobileOpen(true)} />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 focus:outline-none">
-          <div className="max-w-7xl mx-auto w-full space-y-6">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6 focus:outline-none">
+          <div className="max-w-7xl mx-auto w-full space-y-5">
             {children}
           </div>
         </main>

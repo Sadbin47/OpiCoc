@@ -78,27 +78,27 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
       {/* Top Banner */}
-      <div className="rounded-2xl border border-[#262B35] bg-gradient-to-r from-[#12151B] to-[#161B22] p-6 lg:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div className="space-y-2 relative z-10">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono font-medium">
+      <div className="rounded-xl border border-[#262B35] bg-gradient-to-r from-[#12151B] to-[#161B22] p-5 lg:p-6 flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
+        <div className="space-y-1.5 relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono font-medium">
             <Sparkles className="w-3.5 h-3.5" />
             <span>OPICOC Master Administration</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-clash text-[#F1F5F9] tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-bold font-clash text-[#F1F5F9] tracking-tight">
             Welcome back, Chief Architect
           </h2>
-          <p className="text-sm text-[#94A3B8] max-w-xl">
+          <p className="text-xs sm:text-sm text-[#94A3B8] max-w-xl">
             Monitor base releases, verify Supercell layout links, fulfill custom CWL commissions, and reply to esports team inquiries.
           </p>
         </div>
 
         {/* Quick Action Buttons */}
-        <div className="flex flex-wrap items-center gap-3 relative z-10 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 relative z-10 shrink-0">
           <Link
             href="/admin/bases?action=new"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold shadow-lg shadow-amber-500/10 transition"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold shadow-md shadow-amber-500/10 transition"
           >
             <Plus className="w-4 h-4" />
             <span>+ Add Base Layout</span>
@@ -107,7 +107,7 @@ export default function AdminDashboardPage() {
           <button
             onClick={handleExportCsv}
             disabled={isExporting}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg border border-[#262B35] bg-[#14181F] text-[#CBD5E1] hover:text-[#F1F5F9] hover:border-[#3B4252] text-xs font-medium transition"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[#262B35] bg-[#14181F] text-[#CBD5E1] hover:text-[#F1F5F9] hover:border-[#3B4252] text-xs font-medium transition cursor-pointer"
           >
             <Download className="w-4 h-4 text-[#94A3B8]" />
             <span>{isExporting ? "Exporting..." : "Export CSV"}</span>
@@ -115,28 +115,28 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Background glow */}
-        <div className="absolute right-0 top-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute right-0 top-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Metric Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5">
         {/* Metric 1: Total Bases */}
         <Link
           href="/admin/bases"
-          className="rounded-xl border border-[#1E232B] bg-[#12151B] p-4 hover:border-amber-500/40 transition group"
+          className="rounded-xl border border-[#1E232B] bg-[#12151B] p-3.5 hover:border-amber-500/40 transition group"
         >
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-medium text-[#94A3B8]">Active Bases</span>
-            <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400 group-hover:scale-105 transition-transform">
-              <Shield className="w-4 h-4" />
+            <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 group-hover:scale-105 transition-transform">
+              <Shield className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-clash text-[#F1F5F9]">
+          <div className="text-xl sm:text-2xl font-bold font-clash text-[#F1F5F9]">
             {metrics.totalBases}
           </div>
           <span className="text-[11px] text-emerald-400 flex items-center gap-1 mt-1">
             <CheckCircle2 className="w-3 h-3" />
-            <span>Verified in catalogue</span>
+            <span>Verified active bases</span>
           </span>
         </Link>
 
@@ -219,26 +219,26 @@ export default function AdminDashboardPage() {
         </Link>
 
         {/* Metric 6: Est. Revenue */}
-        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-4">
-          <div className="flex items-center justify-between mb-2">
+        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-3.5">
+          <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-medium text-[#94A3B8]">Est. Platform Volume</span>
-            <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400">
-              <TrendingUp className="w-4 h-4" />
+            <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400">
+              <TrendingUp className="w-3.5 h-3.5" />
             </div>
           </div>
-          <div className="text-2xl font-bold font-clash text-[#F1F5F9]">
+          <div className="text-xl sm:text-2xl font-bold font-clash text-[#F1F5F9]">
             ${metrics.totalRevenueEst}
           </div>
           <span className="text-[11px] text-[#94A3B8] flex items-center gap-1 mt-1">
-            <span>Digital catalogue</span>
+            <span>Digital store orders</span>
           </span>
         </div>
       </div>
 
       {/* Two-Column Activity Feed */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Left Column: Recent Custom Orders */}
-        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-6 space-y-4">
+        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-4 sm:p-5 space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <PenTool className="w-4 h-4 text-amber-400" />
@@ -295,7 +295,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Right Column: Support Inquiries */}
-        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-6 space-y-4">
+        <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-4 sm:p-5 space-y-3.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-blue-400" />
@@ -349,7 +349,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* System Status & Operational Checklist */}
-      <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-6 space-y-4">
+      <div className="rounded-xl border border-[#1E232B] bg-[#12151B] p-4 sm:p-5 space-y-3.5">
         <h3 className="text-sm font-semibold text-[#F1F5F9] flex items-center gap-2">
           <Shield className="w-4 h-4 text-emerald-400" />
           <span>Platform Architecture Verification</span>

@@ -79,7 +79,7 @@ export default function AdminBasesPage() {
         <div>
           <h2 className="text-xl font-bold font-clash text-[#F1F5F9] flex items-center gap-2">
             <Shield className="w-5 h-5 text-amber-500" />
-            <span>Base Layout Catalogue ({bases.length})</span>
+            <span>Base Layout Inventory ({bases.length})</span>
           </h2>
           <p className="text-xs text-[#94A3B8]">
             Manage products, pricing, Town Hall classifications, and secure layout links.
