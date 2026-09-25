@@ -42,4 +42,5 @@ Thumbs.db
 
 # Legacy Hostinger archive directory & raw user assets (local reference only)
 /OLD/
-/ALL  BASE/
+/Others/raw-base-images/
+
