@@ -26,14 +26,23 @@ export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const sessionCookie = request.cookies.get(SESSION_COOKIE)?.value;
 
-  // 1. Enforce Rate Limiting on Authentication Endpoints (Brute-force protection)
+  // 1. Enforce Rate Limiting on Non-GET Authentication Submissions (Brute-force protection)
   const isAuthRoute = AUTH_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  if (isAuthRoute) {
-    const clientIp = getClientIp(request.headers);
-    const rateLimit = checkRateLimit(`auth:${clientIp}`, { limit: 15, windowMs: 60 * 1000 });
+  const clientIp = getClientIp(request.headers);
+  const host = request.headers.get("host") || "";
+  const isLocalhost =
+    clientIp === "127.0.0.1" ||
+    clientIp === "::1" ||
+    clientIp === "localhost" ||
+    host.includes("localhost") ||
+    host.includes("127.0.0.1");
+
+  // Only apply rate limiting to mutating auth submissions (e.g. POST), never to GET page views or local development
+  if (isAuthRoute && !isLocalhost && request.method !== "GET" && request.method !== "HEAD") {
+    const rateLimit = checkRateLimit(`auth:${clientIp}`, { limit: 20, windowMs: 60 * 1000 });
 
     if (!rateLimit.success) {
       return applySecurityHeaders(

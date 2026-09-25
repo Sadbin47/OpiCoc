@@ -72,6 +72,21 @@ export function checkRateLimit(
 
   cleanupExpiredRecords(now, windowMs);
 
+  // Permit unlimited requests for local development / loopback testing
+  if (
+    identifier.includes("127.0.0.1") ||
+    identifier.includes("::1") ||
+    identifier.includes("localhost")
+  ) {
+    return {
+      success: true,
+      limit,
+      remaining: limit,
+      reset: Math.ceil((now + windowMs) / 1000),
+      retryAfter: 0,
+    };
+  }
+
   let record = rateLimitStore.get(identifier);
   if (!record) {
     record = { timestamps: [] };
