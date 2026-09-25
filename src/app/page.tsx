@@ -1,25 +1,20 @@
+import { Suspense } from "react";
 import Link from "next/link";
-import { getFeaturedBases } from "@/services/baseService";
-import { getReviews } from "@/services/reviewService";
 import { HeroSection } from "@/features/home/components/HeroSection";
 import { TownHallSelector } from "@/features/home/components/TownHallSelector";
 import { FeaturedBaseGrid } from "@/features/home/components/FeaturedBaseGrid";
+import { FeaturedBaseGridSkeleton } from "@/features/home/components/FeaturedBaseGridSkeleton";
 import { ShowdownBanner } from "@/features/home/components/ShowdownBanner";
 import { VideoSection } from "@/features/home/components/VideoSection";
-import { ReviewSection } from "@/features/home/components/ReviewSection";
+import { ReviewSectionStream } from "@/features/home/components/ReviewSectionStream";
+import { ReviewSectionSkeleton } from "@/features/home/components/ReviewSectionSkeleton";
 import { BrandPillarsSection } from "@/features/home/components/BrandPillarsSection";
 import { Container } from "@/components/layout/Container";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteConfig } from "@/config/site";
 import { Sparkles, BookOpen } from "lucide-react";
 
-export default async function HomePage() {
-  // Fetch data in parallel on the server with single revalidated calls (eliminating V1 duplicate waterfalls)
-  const [featuredBases, reviews] = await Promise.all([
-    getFeaturedBases(),
-    getReviews(),
-  ]);
-
+export default function HomePage() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -39,14 +34,17 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <JsonLd schema={organizationSchema} />
-      {/* 1. High-Impact Hero Section */}
+
+      {/* 1. High-Impact Hero Section (Instant Flush) */}
       <HeroSection />
 
       {/* 2. Town Hall Defense Tier Selector (TH15-TH18) */}
       <TownHallSelector />
 
-      {/* 3. Featured CWL Base Packs Grid */}
-      <FeaturedBaseGrid bases={featuredBases} />
+      {/* 3. Featured CWL Base Packs Grid (React Suspense Streaming) */}
+      <Suspense fallback={<FeaturedBaseGridSkeleton />}>
+        <FeaturedBaseGrid />
+      </Suspense>
 
       {/* 4. Esports Showdown Clan Pack Banner */}
       <ShowdownBanner />
@@ -54,8 +52,10 @@ export default async function HomePage() {
       {/* 5. Defense Video Breakdown (Lazy-Loaded Player & Poster) */}
       <VideoSection />
 
-      {/* 6. Verified Customer Testimonials & Review Dialog */}
-      <ReviewSection reviews={reviews} />
+      {/* 6. Verified Customer Testimonials (React Suspense Streaming) */}
+      <Suspense fallback={<ReviewSectionSkeleton />}>
+        <ReviewSectionStream />
+      </Suspense>
 
       {/* 7. Brand Defense Pillars & Supercell Fair Play Disclaimer */}
       <BrandPillarsSection />
@@ -63,11 +63,11 @@ export default async function HomePage() {
       {/* 8. Rebuild Specifications Transparency Bar */}
       <section className="py-8 bg-[#090B0E] border-t border-[#1E232B]">
         <Container size="default">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
             <div className="flex items-center gap-2">
               <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
-              <span className="font-mono text-[#94A3B8]">
-                OPICOC V2 Architecture Rebuild • Phase 03 Complete
+              <span className="font-mono text-[#CBD5E1]">
+                OPICOC V2 Architecture • Performance & Streaming Active
               </span>
             </div>
             <div className="flex items-center gap-4">

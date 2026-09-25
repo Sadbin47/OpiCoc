@@ -3,15 +3,17 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import { BaseCard } from "@/features/bases/components/BaseCard";
 import { MotionContainer } from "@/components/motion/MotionContainer";
+import { getFeaturedBases } from "@/services/baseService";
 import { BaseProduct } from "@/types";
 import { Flame, ArrowRight } from "lucide-react";
 
 interface FeaturedBaseGridProps {
-  bases: BaseProduct[];
+  bases?: BaseProduct[];
 }
 
-export function FeaturedBaseGrid({ bases }: FeaturedBaseGridProps) {
-  if (!bases || bases.length === 0) {
+export async function FeaturedBaseGrid({ bases }: FeaturedBaseGridProps) {
+  const data = bases || (await getFeaturedBases());
+  if (!data || data.length === 0) {
     return null;
   }
 
@@ -44,7 +46,7 @@ export function FeaturedBaseGrid({ bases }: FeaturedBaseGridProps) {
 
         {/* Staggered Base Products Grid */}
         <MotionContainer animation="stagger" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bases.map((base, idx) => (
+          {data.map((base, idx) => (
             <BaseCard key={base.id} base={base} priority={idx < 4} />
           ))}
         </MotionContainer>

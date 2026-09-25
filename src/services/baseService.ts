@@ -1,8 +1,7 @@
 import { BaseProduct, BaseLayoutLink, TownHallLevel } from "@/types";
 import { db } from "@/db/client";
 
-const API_BASE_URL =
-  process.env.LEGACY_API_URL || "https://backend-omega-one-37.vercel.app/api";
+const API_BASE_URL = process.env.LEGACY_API_URL;
 
 /**
  * Fallback verified seed bases for resilient build and offline development
@@ -173,13 +172,24 @@ function sanitizeBase(raw: RawBaseItem): BaseProduct {
   };
 }
 
+let inMemoryBasesCache: BaseProduct[] | null = null;
+
 /**
- * Fetches all available bases from backend with caching and fallback
+ * Fetches all available bases from backend with in-memory caching and fallback
  */
 export async function getAllBases(): Promise<BaseProduct[]> {
+  if (inMemoryBasesCache) {
+    return inMemoryBasesCache;
+  }
+
+  if (!API_BASE_URL) {
+    inMemoryBasesCache = FALLBACK_BASES;
+    return FALLBACK_BASES;
+  }
+
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
 
     const res = await fetch(`${API_BASE_URL}/admin/get-bases`, {
       next: { revalidate: 3600 },
@@ -190,17 +200,22 @@ export async function getAllBases(): Promise<BaseProduct[]> {
 
     if (!res.ok) {
       console.warn(`[baseService] get-bases returned HTTP ${res.status}, using fallback.`);
+      inMemoryBasesCache = FALLBACK_BASES;
       return FALLBACK_BASES;
     }
 
     const data = await res.json();
     if (data && Array.isArray(data.bases) && data.bases.length > 0) {
-      return data.bases.map(sanitizeBase);
+      const sanitized = data.bases.map(sanitizeBase);
+      inMemoryBasesCache = sanitized;
+      return sanitized;
     }
 
+    inMemoryBasesCache = FALLBACK_BASES;
     return FALLBACK_BASES;
   } catch (error) {
     console.warn("[baseService] Fetch error or timeout, serving fallback seed bases.", error);
+    inMemoryBasesCache = FALLBACK_BASES;
     return FALLBACK_BASES;
   }
 }

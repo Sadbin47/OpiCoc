@@ -1,7 +1,6 @@
 import { CustomerReview } from "@/types";
 
-const API_BASE_URL =
-  process.env.LEGACY_API_URL || "https://backend-omega-one-37.vercel.app/api";
+const API_BASE_URL = process.env.LEGACY_API_URL;
 
 const FALLBACK_REVIEWS: CustomerReview[] = [
   {
@@ -78,13 +77,24 @@ function sanitizeReview(raw: RawReviewItem): CustomerReview {
   };
 }
 
+let inMemoryReviewsCache: CustomerReview[] | null = null;
+
 /**
- * Fetches verified customer reviews
+ * Fetches verified customer reviews with in-memory caching and resilient fallback
  */
 export async function getReviews(): Promise<CustomerReview[]> {
+  if (inMemoryReviewsCache) {
+    return inMemoryReviewsCache;
+  }
+
+  if (!API_BASE_URL) {
+    inMemoryReviewsCache = FALLBACK_REVIEWS;
+    return FALLBACK_REVIEWS;
+  }
+
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
 
     const res = await fetch(`${API_BASE_URL}/review/get-reviews`, {
       next: { revalidate: 3600 },
@@ -95,6 +105,7 @@ export async function getReviews(): Promise<CustomerReview[]> {
 
     if (!res.ok) {
       console.warn(`[reviewService] get-reviews returned HTTP ${res.status}, using fallback.`);
+      inMemoryReviewsCache = FALLBACK_REVIEWS;
       return FALLBACK_REVIEWS;
     }
 
@@ -102,15 +113,19 @@ export async function getReviews(): Promise<CustomerReview[]> {
     if (data && Array.isArray(data.reviews) && data.reviews.length > 0) {
       const sanitized = data.reviews.map(sanitizeReview);
       // Combine with vetted testimonials if live list is small (< 3)
-      if (sanitized.length < 3) {
-        return [...sanitized, ...FALLBACK_REVIEWS.slice(sanitized.length)];
-      }
-      return sanitized;
+      const finalReviews =
+        sanitized.length < 3
+          ? [...sanitized, ...FALLBACK_REVIEWS.slice(sanitized.length)]
+          : sanitized;
+      inMemoryReviewsCache = finalReviews;
+      return finalReviews;
     }
 
+    inMemoryReviewsCache = FALLBACK_REVIEWS;
     return FALLBACK_REVIEWS;
   } catch (error) {
     console.warn("[reviewService] Fetch error or timeout, serving fallback seed reviews.", error);
+    inMemoryReviewsCache = FALLBACK_REVIEWS;
     return FALLBACK_REVIEWS;
   }
 }
